@@ -1,5 +1,7 @@
 package Controller;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -47,11 +49,14 @@ public class Login {
             FXMLLoader loader = new FXMLLoader();
             try {
                 loader.setLocation(getClass().getResource("/view/MainWindow.fxml"));
-                Scene scene = new Scene(loader.load(), 658, 526);
+                Scene scene = new Scene(loader.load());
                 Stage stage = new Stage();
                 stage.setTitle("Welcome " + user + ".!");
                 stage.setScene(scene);
                 stage.show();
+
+
+
             } catch (IOException e) {
                 e.printStackTrace();
             }

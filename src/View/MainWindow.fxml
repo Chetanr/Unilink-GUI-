@@ -1,51 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.SeparatorMenuItem?>
-<?import javafx.scene.control.ToolBar?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="10.0" minWidth="10.0" prefHeight="526.0" prefWidth="658.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.MainWindow">
-  <columnConstraints>
-    <ColumnConstraints hgrow="SOMETIMES" maxWidth="658.0" minWidth="10.0" prefWidth="658.0" />
-    <ColumnConstraints hgrow="SOMETIMES" maxWidth="294.0" minWidth="0.0" prefWidth="0.0" />
-  </columnConstraints>
-  <rowConstraints>
-    <RowConstraints maxHeight="130.0" minHeight="0.0" prefHeight="19.0" vgrow="SOMETIMES" />
-    <RowConstraints maxHeight="130.0" minHeight="0.0" prefHeight="31.0" vgrow="SOMETIMES" />
-    <RowConstraints maxHeight="471.0" minHeight="0.0" prefHeight="471.0" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="351.0" minHeight="0.0" prefHeight="0.0" vgrow="SOMETIMES" />
-  </rowConstraints>
-   <children>
-      <MenuBar fx:id="menuBar">
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <top>
+      <MenuBar BorderPane.alignment="CENTER">
         <menus>
-          <Menu fx:id="uniLink" mnemonicParsing="false" text="Unilink">
+          <Menu mnemonicParsing="false" text="Unilink">
             <items>
-              <MenuItem fx:id="developerInfo" mnemonicParsing="false" text="Developer Info" />
+              <MenuItem mnemonicParsing="false" text="Developer Info" />
                   <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem fx:id="quit" mnemonicParsing="false" text="Quit Unilink" />
+                  <MenuItem mnemonicParsing="false" text="Quit Unilink" />
             </items>
           </Menu>
-          <Menu fx:id="data" mnemonicParsing="false" text="Data">
+          <Menu mnemonicParsing="false" text="Data">
             <items>
-              <MenuItem fx:id="im_port" mnemonicParsing="false" text="Import" />
+              <MenuItem mnemonicParsing="false" text="Import" />
                   <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem fx:id="export" mnemonicParsing="false" text="Export" />
+                  <MenuItem mnemonicParsing="false" text="Export" />
             </items>
           </Menu>
+
         </menus>
       </MenuBar>
-      <ToolBar fx:id="toolbar" minHeight="10.0" minWidth="10.0" prefHeight="29.0" prefWidth="20.0" GridPane.rowIndex="1">
-        <items>
-          <Button mnemonicParsing="false" onAction="#eventPost" prefHeight="20.0" prefWidth="20.0" text="New Event Post" />
-            <Button mnemonicParsing="false" onAction="#salePost" text="New Sale Post" />
-            <Button mnemonicParsing="false" onAction="#jobPost" text="New Job Post" />
-        </items>
-      </ToolBar>
-   </children>
-</GridPane>
+   </top>
+   <center>
+      <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+        <tabs>
+          <Tab text="New Job Post" />
+          <Tab text="New Event Post" />
+            <Tab text="New Sale post">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              </content>
+            </Tab>
+        </tabs>
+      </TabPane>
+   </center>
+</BorderPane>
