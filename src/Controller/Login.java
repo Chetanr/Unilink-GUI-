@@ -54,13 +54,9 @@ public class Login {
                 stage.setTitle("Welcome " + user + ".!");
                 stage.setScene(scene);
                 stage.show();
-
-
-
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }
-    );
+        });
     }
 }

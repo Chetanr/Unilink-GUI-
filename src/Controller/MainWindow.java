@@ -3,6 +3,7 @@ package Controller;
 import javafx.scene.control.*;
 import javafx.fxml.FXML;
 import javafx.event.*;
+import javafx.stage.Stage;
 
 public class MainWindow {
     @FXML private Menu uniLink;
@@ -21,5 +22,9 @@ public class MainWindow {
     }
 
     @FXML private void jobPost(ActionEvent actionEvent) {
+    }
+
+    @FXML private void quitUnilink(ActionEvent actionEvent) {
+
     }
 }
