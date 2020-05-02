@@ -18,7 +18,7 @@ public class Login extends Application {
     public void start(Stage stage) {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/view/Login.fxml"));
-            Scene scene = new Scene(root, 521, 279);
+            Scene scene = new Scene(root);
 
             stage.setTitle("Unilink");
             stage.setScene(scene);
