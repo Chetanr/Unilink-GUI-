@@ -27,7 +27,9 @@
                 </Menu>
                 <Menu mnemonicParsing="false" text="Data">
                   <items>
-                    <MenuItem mnemonicParsing="false" text="Delete" />
+                    <MenuItem mnemonicParsing="false" text="Import" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem mnemonicParsing="false" text="Export" />
                   </items>
                 </Menu>
                 <Menu mnemonicParsing="false">
@@ -39,9 +41,9 @@
             </MenuBar>
             <ToolBar prefHeight="40.0" prefWidth="200.0">
               <items>
-                <Button mnemonicParsing="false" text="New Event Post" />
-                  <Button mnemonicParsing="false" text="New SalePost" />
-                  <Button mnemonicParsing="false" text="New Job Post" />
+                <Button mnemonicParsing="false" onAction="#eventPost" text="New Event Post" />
+                  <Button fx:id="salePost" mnemonicParsing="false" onAction="#salePost" text="New SalePost" />
+                  <Button mnemonicParsing="false" onAction="#jobPost" text="New Job Post" />
                   <Label text="Type:">
                      <padding>
                         <Insets left="50.0" />
