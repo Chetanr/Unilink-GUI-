@@ -17,8 +17,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class MainWindow implements Initializable {
-    @FXML private Menu uniLink;
-    @FXML private MenuItem developerInfo;
+    @FXML private Menu unilinkMenu;
+    @FXML private MenuItem devInfo;
     @FXML private MenuItem quit;
     @FXML private MenuItem im_port;
     @FXML private MenuItem export;
@@ -33,8 +33,8 @@ public class MainWindow implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        postType.setItems(postTypeList);
-        postStatus.setItems(postStatusList);
+//        postType.setItems(postTypeList);
+//        postStatus.setItems(postStatusList);
     }
 
 
@@ -48,27 +48,25 @@ public class MainWindow implements Initializable {
     }
 
 
-    public void quit(ActionEvent actionEvent) {
+    @FXML private void quit(ActionEvent actionEvent) {
         Platform.exit();
     }
 
-    public void devInfo(ActionEvent actionEvent) {
-
-        developerInfo.setOnAction((event) -> {
+    @FXML private void devInfo(ActionEvent actionEvent) {
             FXMLLoader loader = new FXMLLoader();
             try {
-                loader.setLocation(getClass().getResource("/view/Devinfo.fxml"));
-                Scene scene = new Scene(loader.load());
+                Scene scene = new Scene(FXMLLoader.load(getClass().getResource("/view/Devinfo.fxml")));
                 Stage stage = new Stage();
                 stage.setTitle("Developer Information");
                 stage.setScene(scene);
                 stage.show();
 
 
-            } catch (IOException e) {
+            } catch (Exception e) {
                 System.out.println("Could not open DevInfo");
+                e.printStackTrace();
+
             }
-        });
 
     }
 

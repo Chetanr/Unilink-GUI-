@@ -4,15 +4,14 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.MainWindow">
+<AnchorPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.MainWindow">
    <children>
-      <Label layoutX="121.0" layoutY="123.0" text="Student Name : Chetan Revappa">
+      <Label layoutX="78.0" layoutY="29.0" text="Student Name : Chetan Revappa" AnchorPane.bottomAnchor="71.0" AnchorPane.leftAnchor="78.0" AnchorPane.rightAnchor="22.0" AnchorPane.topAnchor="29.0">
          <font>
             <Font name="System Bold" size="24.0" />
          </font>
       </Label>
-      <Label layoutX="121.0" layoutY="164.0" prefHeight="29.0" prefWidth="329.0" text="Student Number :  S3793263">
+      <Label layoutX="87.0" layoutY="115.0" prefHeight="29.0" prefWidth="329.0" text="Student Number :  S3793263" AnchorPane.bottomAnchor="85.0" AnchorPane.leftAnchor="87.0" AnchorPane.rightAnchor="113.0" AnchorPane.topAnchor="115.0">
          <font>
             <Font name="System Bold" size="24.0" />
          </font>

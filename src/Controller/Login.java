@@ -1,6 +1,7 @@
 package Controller;
 
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.fxml.FXML;
@@ -11,12 +12,9 @@ import javafx.stage.WindowEvent;
 import java.io.IOException;
 
 public class Login {
-    @FXML
-    private Label validate;
-    @FXML
-    private Button login;
-    @FXML
-    private TextField userName;
+    @FXML private Label validate;
+    @FXML private Button login;
+    @FXML private TextField userName;
 
     @FXML
     private void initialize() {
@@ -49,6 +47,7 @@ public class Login {
         login.setOnMouseClicked((event) -> {
             FXMLLoader loader = new FXMLLoader();
             try {
+                ((Node)(event.getSource())).getScene().getWindow().hide();
                 loader.setLocation(getClass().getResource("/view/MainWindow.fxml"));
                 Scene scene = new Scene(loader.load());
                 Stage stage = new Stage();
