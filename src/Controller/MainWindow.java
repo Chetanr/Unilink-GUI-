@@ -6,6 +6,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.fxml.FXML;
@@ -16,10 +17,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class MainWindow implements Initializable {
+public class MainWindow {
+    @FXML private Button logout;
     @FXML private Menu unilinkMenu;
-    @FXML private MenuItem devInfo;
-    @FXML private MenuItem quit;
     @FXML private MenuItem im_port;
     @FXML private MenuItem export;
     @FXML private MenuBar menuBar;
@@ -31,11 +31,11 @@ public class MainWindow implements Initializable {
     ObservableList<String> postTypeList = FXCollections.observableArrayList("Event Post", "Sale Post", "Job Post");
     ObservableList<String> postStatusList = FXCollections.observableArrayList("Open", "Closed");
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+//    @FXML
+//    public void initialize() {
 //        postType.setItems(postTypeList);
 //        postStatus.setItems(postStatusList);
-    }
+//    }
 
 
     @FXML private void eventPost(ActionEvent actionEvent) {
@@ -52,6 +52,7 @@ public class MainWindow implements Initializable {
         Platform.exit();
     }
 
+    //method for Developer Info button
     @FXML private void devInfo(ActionEvent actionEvent) {
             FXMLLoader loader = new FXMLLoader();
             try {
@@ -60,15 +61,31 @@ public class MainWindow implements Initializable {
                 stage.setTitle("Developer Information");
                 stage.setScene(scene);
                 stage.show();
-
-
             } catch (Exception e) {
                 System.out.println("Could not open DevInfo");
                 e.printStackTrace();
 
             }
-
     }
 
 
+    //method for logout button
+    @FXML
+    public void logout(ActionEvent actionEvent) {
+        logout.setOnMouseClicked((event) -> {
+            FXMLLoader loader = new FXMLLoader();
+            try {
+                ((Node)(event.getSource())).getScene().getWindow().hide();
+                loader.setLocation(getClass().getResource("/view/Login.fxml"));
+                Scene scene = new Scene(loader.load());
+                Stage stage = new Stage();
+                stage.setScene(scene);
+                stage.show();
+
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+    }
 }

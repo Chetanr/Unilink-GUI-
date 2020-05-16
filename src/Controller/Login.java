@@ -7,7 +7,6 @@ import javafx.scene.control.*;
 import javafx.fxml.FXML;
 import javafx.event.*;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 
 import java.io.IOException;
 
@@ -21,13 +20,15 @@ public class Login {
         validate.setText("");
     }
 
+
+    //method for login button
     @FXML
     private void login(ActionEvent actionEvent) {
         if (userName.getText().equals("")) {
             validate.setText("Please enter your username.!");
         } else if (validateLogin(userName.getText()) == 1) {
             validate.setText("Hello " + userName.getText());
-            setLogin(actionEvent, userName.getText());
+            setLogin(userName.getText());
         } else {
             validate.setText("Invalid username. Please try again.!");
         }
@@ -39,11 +40,12 @@ public class Login {
                 return 1;
             }
         }
-
         return 0;
     }
 
-    private void setLogin(ActionEvent actionEvent, String user) {
+
+    //method to open new window after succesfull login validation
+    private void setLogin(String user) {
         login.setOnMouseClicked((event) -> {
             FXMLLoader loader = new FXMLLoader();
             try {
@@ -54,17 +56,9 @@ public class Login {
                 stage.setTitle("Welcome " + user + ".!");
                 stage.setScene(scene);
                 stage.show();
-
-
             } catch (IOException e) {
                 e.printStackTrace();
             }
         });
-
-
-
     }
-
-
-
 }

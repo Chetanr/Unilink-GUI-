@@ -7,7 +7,7 @@ import javafx.fxml.FXMLLoader;
 
 import java.io.IOException;
 
-public class Login extends Application {
+public class UniLinkGUI extends Application {
 
     public static void main(String[] args) {
         launch(args);
