@@ -38,9 +38,9 @@
             </MenuBar>
             <ToolBar prefHeight="40.0" prefWidth="200.0">
               <items>
-                <Button mnemonicParsing="false" onAction="#eventPost" text="New Event Post" />
+                <Button fx:id="eventPost" mnemonicParsing="false" onAction="#eventPost" text="New Event Post" />
                   <Button fx:id="salePost" mnemonicParsing="false" onAction="#salePost" text="New SalePost" />
-                  <Button mnemonicParsing="false" onAction="#jobPost" text="New Job Post" />
+                  <Button fx:id="jobPost" mnemonicParsing="false" onAction="#jobPost" text="New Job Post" />
                   <Label text="Type:">
                      <padding>
                         <Insets left="50.0" />
@@ -70,10 +70,10 @@
    <center>
       <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
-            <HBox style="-fx-background-color: white; -fx-opacity: white;">
+            <HBox style="-fx-background-color: white;">
                <children>
                   <Label text="Label" />
-                  <Label text="Welcome.!">
+                  <Label fx:id="welcomeLabel" text="Welcome.!">
                      <padding>
                         <Insets left="250.0" right="200.0" />
                      </padding>
@@ -81,7 +81,7 @@
                   <Button fx:id="logout" mnemonicParsing="false" onAction="#logout" text="Logout" />
                </children>
             </HBox>
-            <ListView prefHeight="200.0" prefWidth="200.0" />
+            <ListView fx:id="list" prefHeight="200.0" prefWidth="200.0" />
          </children>
       </VBox>
    </center>

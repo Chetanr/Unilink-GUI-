@@ -1,4 +1,4 @@
 package Controller;
 
-public class Post {
+public class JobPost {
 }

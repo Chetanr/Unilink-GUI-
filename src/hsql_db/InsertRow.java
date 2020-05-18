@@ -11,8 +11,8 @@ public class InsertRow {
 		try (Connection con = ConnectionTest.getConnection(DB_NAME);
 				Statement stmt = con.createStatement();
 		) {
-			String query = "INSERT INTO " + TABLE_NAME + 
-					" VALUES (1, 's3388490', 'Peter', 'Tilmanis')";
+			String query = "INSERT INTO " + TABLE_NAME + "(creator_id, post_id, title, description)" +
+					" VALUES ('s1', 's3388490', 'Peter', 'Tilmanis')";
 					//" VALUES (2, 's3089940', 'Tom', 'Bruster')";
 			
 			int result = stmt.executeUpdate(query);
