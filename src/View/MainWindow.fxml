@@ -72,8 +72,7 @@
          <children>
             <HBox style="-fx-background-color: white;">
                <children>
-                  <Label text="Label" />
-                  <Label fx:id="welcomeLabel" text="Welcome.!">
+                  <Label fx:id="welcomeLabel" text="Welcome">
                      <padding>
                         <Insets left="250.0" right="200.0" />
                      </padding>

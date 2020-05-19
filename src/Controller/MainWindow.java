@@ -34,14 +34,14 @@ public class MainWindow {
     @FXML private ComboBox <String> postStatus;
     @FXML private ComboBox <String> postCreator;
 
-    ObservableList<String> postTypeList = FXCollections.observableArrayList("Event Post", "Sale Post", "Job Post");
-    ObservableList<String> postStatusList = FXCollections.observableArrayList("Open", "Closed");
+//    ObservableList<String> postTypeList = FXCollections.observableArrayList("Event Post", "Sale Post", "Job Post");
+//    ObservableList<String> postStatusList = FXCollections.observableArrayList("Open", "Closed");
 
-//    @FXML
-//    public void initialize() {
+    @FXML
+    public void initialize() {
 //        postType.setItems(postTypeList);
 //        postStatus.setItems(postStatusList);
-//    }
+    }
 
 
     //method for creating a new sale post
@@ -57,6 +57,7 @@ public class MainWindow {
                 stage.initModality(Modality.APPLICATION_MODAL);
                 stage.showAndWait();
             } catch (IOException e) {
+                System.out.println("Could not open EventPost.fxml");
                 e.printStackTrace();
             }
         });
@@ -95,7 +96,7 @@ public class MainWindow {
                 stage.initModality(Modality.APPLICATION_MODAL);
                 stage.showAndWait();
             } catch (IOException e) {
-                System.out.println("Could not open SalePost.fxml");
+                System.out.println("Could not open JobPost.fxml");
                 e.printStackTrace();
             }
         });
@@ -125,8 +126,7 @@ public class MainWindow {
 
 
     //method for logout button
-    @FXML
-    public void logout(ActionEvent actionEvent) {
+    @FXML private void logout(ActionEvent actionEvent) {
         logout.setOnMouseClicked((event) -> {
             FXMLLoader loader = new FXMLLoader();
             try {
@@ -139,7 +139,7 @@ public class MainWindow {
 
 
             } catch (IOException e) {
-                System.out.println("Could not open Login.fxml");
+                System.out.println("Could not open Logout.fxml");
                 e.printStackTrace();
             }
         });

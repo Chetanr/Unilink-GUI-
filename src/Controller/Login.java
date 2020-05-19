@@ -15,6 +15,9 @@ public class Login {
     @FXML private Button login;
     @FXML private TextField userName;
 
+
+    private String user;
+
     @FXML
     private void initialize() {
         validate.setText("");
@@ -29,6 +32,7 @@ public class Login {
         } else if (validateLogin(userName.getText()) == 1) {
             validate.setText("Hello " + userName.getText());
             setLogin(userName.getText());
+            setUser(userName.getText());
         } else {
             validate.setText("Invalid username. Please try again.!");
         }
@@ -60,5 +64,17 @@ public class Login {
                 e.printStackTrace();
             }
         });
+    }
+
+
+    //getter for username. This is done to display the username in the mainWindow
+    public String getUser() {
+        return user;
+    }
+
+
+    //setter to store the username. This is done to display the username in the mainWindow
+    public void setUser(String user) {
+        this.user = user;
     }
 }

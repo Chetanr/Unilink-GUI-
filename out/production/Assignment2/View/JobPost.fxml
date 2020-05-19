@@ -9,11 +9,11 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="547.0" prefWidth="659.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.SalePost">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="547.0" prefWidth="659.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.JobPost">
    <children>
       <ToolBar prefHeight="40.0" prefWidth="659.0">
          <items>
-            <Button mnemonicParsing="false" text="Back to Main Window" />
+            <Button fx:id="back" mnemonicParsing="false" onAction="#back" text="Back to Main Window" />
             <Label text="Create New Job Post">
                <padding>
                   <Insets left="150.0" />
@@ -24,28 +24,28 @@
             </Label>
          </items>
       </ToolBar>
-      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="8.0" layoutY="90.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="imageView" fitHeight="150.0" fitWidth="200.0" layoutX="8.0" layoutY="90.0" pickOnBounds="true" preserveRatio="true" />
       <Label layoutX="267.0" layoutY="76.0" text="Title :">
          <font>
             <Font size="15.0" />
          </font>
       </Label>
-      <TextArea layoutX="327.0" layoutY="65.0" prefHeight="27.0" prefWidth="219.0" />
+      <TextArea fx:id="title" layoutX="327.0" layoutY="65.0" prefHeight="27.0" prefWidth="219.0" />
       <Label layoutX="234.0" layoutY="143.0" text="Description :">
          <font>
             <Font size="15.0" />
          </font>
       </Label>
-      <TextArea layoutX="327.0" layoutY="131.0" prefHeight="27.0" prefWidth="219.0" />
+      <TextArea fx:id="description" layoutX="327.0" layoutY="131.0" prefHeight="27.0" prefWidth="219.0" />
       <Label layoutX="216.0" layoutY="220.0" text="Proposed Price :">
          <font>
             <Font size="15.0" />
          </font>
       </Label>
-      <TextArea layoutX="327.0" layoutY="208.0" prefHeight="27.0" prefWidth="219.0" />
-      <Button layoutX="61.0" layoutY="260.0" mnemonicParsing="false" text="Upload Image" />
-      <Button layoutX="243.0" layoutY="300.0" mnemonicParsing="false" text="Close Post" />
-      <Button layoutX="374.0" layoutY="300.0" mnemonicParsing="false" text="Delete Post" />
-      <Button layoutX="507.0" layoutY="300.0" mnemonicParsing="false" text="Save Post" />
+      <TextArea fx:id="proposedPrice" layoutX="327.0" layoutY="208.0" prefHeight="27.0" prefWidth="219.0" />
+      <Button fx:id="upload" layoutX="61.0" layoutY="260.0" mnemonicParsing="false" onAction="#upload" text="Upload Image" />
+      <Button fx:id="closePost" layoutX="243.0" layoutY="300.0" mnemonicParsing="false" onAction="#closePost" text="Close Post" />
+      <Button fx:id="deletePost" layoutX="374.0" layoutY="300.0" mnemonicParsing="false" onAction="#deletePost" text="Delete Post" />
+      <Button fx:id="savePost" layoutX="507.0" layoutY="300.0" mnemonicParsing="false" onAction="#savePost" text="Save Post" />
    </children>
 </AnchorPane>
