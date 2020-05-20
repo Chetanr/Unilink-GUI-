@@ -7,34 +7,82 @@ public class CreateTable {
 	public static void main(String[] args) throws SQLException {
 
 		final String DB_NAME = "Unilink";
-		final String TABLE1 = "Post";
-		final String TABLE2 = "Reply";
+		final String EVENT_TABLE = "EVENTPOST";
+		final String SALE_TABLE = "SALEPOST";
+		final String JOB_TABLE = "JOBPOST";
+		final String REPLY_TABLE = "REPLY";
 
-		createTable(TABLE1, DB_NAME);
-		createReplyTable(TABLE2, DB_NAME);
+		createEventTable(EVENT_TABLE, DB_NAME);
+		createSaleTable(SALE_TABLE, DB_NAME);
+		createJobTable(JOB_TABLE, DB_NAME);
+		createReplyTable(REPLY_TABLE, DB_NAME);
+	}
+
+	private static void createJobTable(String JOB_TABLE, String DB_NAME) {
+		try (Connection con = ConnectionTest.getConnection(DB_NAME);
+			 Statement stmt = con.createStatement();
+		) {
+			int result = stmt.executeUpdate("CREATE TABLE " + JOB_TABLE + "("
+					+ "creator_id VARCHAR(10) NOT NULL,"
+					+ "post_id VARCHAR(8) NOT NULL,"
+					+ "title VARCHAR(20) NOT NULL,"
+					+ "description VARCHAR(200) NOT NULL,"
+					+ "status VARCHAR(6) NOT NULL,"
+					+ "asking_price int NOT NULL,"
+					+ "PRIMARY KEY (post_id))");
+			if(result == 0) {
+				System.out.println("Table " + JOB_TABLE + " has been created successfully");
+			} else {
+				System.out.println("Table " + JOB_TABLE + " is not created");
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+	}
+
+	private static void createSaleTable(String SALE_TABLE, String DB_NAME) {
+		try (Connection con = ConnectionTest.getConnection(DB_NAME);
+			 Statement stmt = con.createStatement();
+		) {
+			int result = stmt.executeUpdate("CREATE TABLE " + SALE_TABLE + "("
+					+ "creator_id VARCHAR(10) NOT NULL,"
+					+ "post_id VARCHAR(8) NOT NULL,"
+					+ "title VARCHAR(20) NOT NULL,"
+					+ "description VARCHAR(200) NOT NULL,"
+					+ "status VARCHAR(6) NOT NULL,"
+					+ "asking_price int NOT NULL,"
+					+ "minimum_raise int NOT NULL,"
+					+ "PRIMARY KEY (post_id))");
+			if(result == 0) {
+				System.out.println("Table " + SALE_TABLE + " has been created successfully");
+			} else {
+				System.out.println("Table " + SALE_TABLE + " is not created");
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
 	}
 
 
 	//create post table to store all the posts
-	private static void createTable(String table1, String DB_NAME) {
+	private static void createEventTable(String EVENT_TABLE, String DB_NAME) {
 		try (Connection con = ConnectionTest.getConnection(DB_NAME);
 			 Statement stmt = con.createStatement();
 		) {
-			int result = stmt.executeUpdate("CREATE TABLE post ("
+			int result = stmt.executeUpdate("CREATE TABLE " + EVENT_TABLE + "("
 					+ "creator_id VARCHAR(10) NOT NULL,"
 					+ "post_id VARCHAR(8) NOT NULL,"
-					+ "title VARCHAR(20) ,"
-					+ "description VARCHAR(200) ,"
-					+ "asking_price int,"
-					+ "status VARCHAR(6),"
-					+ "venue VARCHAR(10),"
-					+ "date DATE,"
-					+ "capacity int,"
+					+ "title VARCHAR(20) NOT NULL,"
+					+ "description VARCHAR(200) NOT NULL,"
+					+ "status VARCHAR(6) NOT NULL,"
+					+ "venue VARCHAR(10) NOT NULL,"
+					+ "date DATE NOT NULL,"
+					+ "capacity int NOT NULL,"
 					+ "PRIMARY KEY (post_id))");
 			if(result == 0) {
-				System.out.println("Table " + table1 + " has been created successfully");
+				System.out.println("Table " + EVENT_TABLE + " has been created successfully");
 			} else {
-				System.out.println("Table " + table1 + " is not created");
+				System.out.println("Table " + EVENT_TABLE + " is not created");
 			}
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
@@ -42,20 +90,20 @@ public class CreateTable {
 	}
 
 	//create reply table
-	private static void createReplyTable(String table2, String db_name) {
+	private static void createReplyTable(String REPLY_TABLE, String db_name) {
 		try (Connection con = ConnectionTest.getConnection(db_name);
 			 Statement stmt = con.createStatement();
 		) {
-			int result = stmt.executeUpdate("CREATE TABLE Reply ("
+			int result = stmt.executeUpdate("CREATE TABLE " + REPLY_TABLE + "("
 					+ "creator_id VARCHAR(10) NOT NULL,"
 					+ "post_id VARCHAR(8) NOT NULL,"
 					+ "job_offer int,"
 					+ "sale_offer int,"
 					+ "PRIMARY KEY (post_id))");
 			if(result == 0) {
-				System.out.println("Table " + table2 + " has been created successfully");
+				System.out.println("Table " + REPLY_TABLE + " has been created successfully");
 			} else {
-				System.out.println("Table " + table2 + " is not created");
+				System.out.println("Table " + REPLY_TABLE + " is not created");
 			}
 		} catch (Exception e) {
 			System.out.println(e.getMessage());

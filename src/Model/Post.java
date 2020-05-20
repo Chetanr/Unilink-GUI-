@@ -1,7 +1,7 @@
 package Model;
 
 public abstract class Post {
-    private String id;
+    private String postId;
     private String title;
     private String description;
     private String creator_id;
@@ -9,9 +9,9 @@ public abstract class Post {
     private String replies;
 
     //constructor to create a new post
-    public Post (String id, String title, String description, String status, String creator_id)
+    public Post (String postId, String title, String description, String status, String creator_id)
     {
-        this.id = id;
+        this.postId = postId;
         this.title = title;
         this.description = description;
         this.status = status;
@@ -62,7 +62,7 @@ public abstract class Post {
 
 
     //accessor for creator_id
-    public String getCreator_id ()
+    public String getCreatorId()
     {
         return this.creator_id;
     }
@@ -104,15 +104,15 @@ public abstract class Post {
 
 
     //accessor for id
-    public String getId ()
+    public String getPostId()
     {
-        return this.id;
+        return this.postId;
     }
 
 
     //mutator for id
-    public void setId (String id)
+    public void setPostId(String postId)
     {
-        this.id = id;
+        this.postId = postId;
     }
 }

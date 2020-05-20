@@ -48,7 +48,7 @@ public class Login {
     }
 
 
-    //method to open new window after succesfull login validation
+    //method to open new window after successfull login validation
     private void setLogin(String user) {
         login.setOnMouseClicked((event) -> {
             FXMLLoader loader = new FXMLLoader();
