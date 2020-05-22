@@ -2,22 +2,17 @@ package Controller;
 
 import Model.Event;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
+import javafx.fxml.*;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.stage.FileChooser;
-import javafx.stage.Stage;
-
 import java.io.File;
-import java.io.IOException;
 import java.net.MalformedURLException;
-import java.text.NumberFormat;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
+
 
 public class EventPost {
     @FXML private Label capacityError;
@@ -34,13 +29,19 @@ public class EventPost {
     @FXML private Button savePost;
 
 
+    private String fileName;
+    private String filePath;
+    FileChooser fileChooser = new FileChooser();
+    File file;
+
+
     @FXML private void upload(ActionEvent actionEvent) {
         upload.setOnMouseClicked((event) ->
         {
             FileChooser.ExtensionFilter imageFilter = new FileChooser.ExtensionFilter("Image Files", "*.jpg", "*.png");
-            FileChooser fileChooser = new FileChooser();
             fileChooser.getExtensionFilters().add(imageFilter);
-            File file = fileChooser.showOpenDialog(null);
+            file = fileChooser.showOpenDialog(null);
+            fileName = file.getAbsoluteFile().getName();
             if (file != null)
             {
                 try {
@@ -62,6 +63,8 @@ public class EventPost {
     }
 
     @FXML private void deletePost(ActionEvent actionEvent) {
+        System.out.println(fileName);
+        saveImage();
     }
 
     @FXML private void savePost(ActionEvent actionEvent) {
@@ -69,6 +72,7 @@ public class EventPost {
             checkCapacity();
             Event ev = new Event ("EVE1", title.getText(), description.getText(), venue.getText(), date.getValue().toString(), Integer.parseInt(capacity.getText()), "OPEN", "s1" );
             ev.insertDB();
+            //saveImage();
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Successfully created post");
             alert.setContentText("The Post has been created successfully");
@@ -77,6 +81,22 @@ public class EventPost {
         });
 
 
+
+    }
+
+    private void saveImage() {
+        try
+        {
+            String path = "./src/Images/" + fileName;
+            //String path = System.getProperty("user.dir");
+            System.out.println(path);
+            File dest = new File(path);
+            Files.copy(file.toPath(), dest.toPath(), StandardCopyOption.REPLACE_EXISTING);
+           //ImageIO.write(ImageIO.read(file),"jpeg", new File("./src/images/" + fileName));
+        } catch(Exception e)
+        {
+            e.printStackTrace();
+        }
 
     }
 
