@@ -74,7 +74,8 @@ public class EventPost extends Post{
             if (checkCapacity())
             {
                 GenerateId id = new GenerateId();
-                Event ev = new Event (id.getId(), title.getText(), description.getText(), venue.getText(), date.getValue().toString(), Integer.parseInt(capacity.getText()), "OPEN", "s1", fileName );
+                Login login = new Login();
+                Event ev = new Event (id.getId(), title.getText(), description.getText(), venue.getText(), date.getValue().toString(), Integer.parseInt(capacity.getText()), "OPEN", login.getUser(), fileName );
                 ev.insertDB();
                 saveImage();
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -115,11 +116,11 @@ public class EventPost extends Post{
     @FXML private boolean checkCapacity() {
         if(!(capacity.getText().contains("[0-9]")))
         {
-            return false;
+            return true;
         }
         else
         {
-            return true;
+            return false;
         }
     }
 }

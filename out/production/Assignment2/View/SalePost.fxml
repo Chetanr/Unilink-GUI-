@@ -53,5 +53,7 @@
       <Button fx:id="closePost" layoutX="253.0" layoutY="365.0" mnemonicParsing="false" onAction="#closePost" text="Close Post" />
       <Button fx:id="deletePost" layoutX="382.0" layoutY="365.0" mnemonicParsing="false" onAction="#deletePost" text="Delete Post" />
       <Button fx:id="savePost" layoutX="502.0" layoutY="365.0" mnemonicParsing="false" onAction="#savePost" text="Save Post" />
+      <Label fx:id="askingPriceError" layoutX="560.0" layoutY="221.0" textFill="#ee0404" />
+      <Label fx:id="minRaiseError" layoutX="560.0" layoutY="287.0" textFill="#e40a0a" />
    </children>
 </AnchorPane>

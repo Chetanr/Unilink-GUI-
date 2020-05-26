@@ -28,7 +28,7 @@ public class CreateTable {
 					+ "title VARCHAR(20) NOT NULL,"
 					+ "description VARCHAR(200) NOT NULL,"
 					+ "status VARCHAR(6) NOT NULL,"
-					+ "asking_price DECIMAL(5,2) NOT NULL,"
+					+ "proposed_offer DECIMAL(5,2) NOT NULL,"
 					+ "image_name VARCHAR(100),"
 					+ "PRIMARY KEY (post_id))");
 			if(result == 0) {
@@ -100,8 +100,8 @@ public class CreateTable {
 			int result = stmt.executeUpdate("CREATE TABLE " + REPLY_TABLE + "("
 					+ "creator_id VARCHAR(10) NOT NULL,"
 					+ "post_id VARCHAR(8) NOT NULL,"
-					+ "job_offer int,"
-					+ "sale_offer int,"
+					+ "job_offer DECIMAL(6,2),"
+					+ "sale_offer DECIMAL(6,2),"
 					+ "PRIMARY KEY (post_id))");
 			if(result == 0) {
 				System.out.println("Table " + REPLY_TABLE + " has been created successfully");

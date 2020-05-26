@@ -13,8 +13,7 @@ import java.io.IOException;
 public class Login {
     @FXML private Label validate;
     @FXML private Button login;
-    @FXML private TextField userName;
-
+    @FXML protected TextField userName;
 
     private String user;
 
@@ -65,7 +64,6 @@ public class Login {
             }
         });
     }
-
 
     //getter for username. This is done to display the username in the mainWindow
     public String getUser() {

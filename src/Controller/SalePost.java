@@ -82,12 +82,13 @@ public class SalePost extends Post{
     @Override
     @FXML protected void savePost(ActionEvent actionEvent) {
         savePost.setOnMouseClicked((event) -> {
-            if(checkPrice(askingPrice))
+            if(checkPrice(askingPrice.getText()))
             {
-                if (checkPrice(minimumRaise))
+                if (checkPrice(minimumRaise.getText()))
                 {
                     GenerateId id = new GenerateId();
-                    Sale sale = new Sale (id.getId(), title.getText(), description.getText(), Double.parseDouble(askingPrice.getText()), Double.parseDouble(minimumRaise.getText()),  "OPEN", "s1", fileName );
+                    Login login = new Login();
+                    Sale sale = new Sale (id.getId(), title.getText(), description.getText(), Double.parseDouble(askingPrice.getText()), Double.parseDouble(minimumRaise.getText()),  "OPEN", login.getUser(), fileName );
                     sale.insertDB();
                     saveImage();
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -122,14 +123,14 @@ public class SalePost extends Post{
         }
     }
 
-    @FXML private boolean checkPrice(TextArea area) {
-        if(!(area.getText().contains("[0-9]")))
+    @FXML private boolean checkPrice(String area) {
+        if(!(area.contains("[0-9]")))
         {
-            return false;
+            return true;
         }
         else
         {
-            return true;
+            return false;
         }
     }
 }

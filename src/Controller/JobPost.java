@@ -1,9 +1,14 @@
 package Controller;
 
+import Model.Event;
+import Model.GenerateId;
+import Model.Job;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -17,6 +22,7 @@ import java.nio.file.StandardCopyOption;
 public class JobPost extends Post{
 
 
+    @FXML private Label proposedPriceError;
     @FXML private ImageView imageView;
     @FXML private Button savePost;
     @FXML private Button deletePost;
@@ -73,6 +79,25 @@ public class JobPost extends Post{
 
     @Override
     @FXML protected void savePost(ActionEvent actionEvent) {
+        savePost.setOnMouseClicked((event) -> {
+            if(checkPrice(proposedPrice.getText()))
+            {
+                GenerateId id = new GenerateId();
+                Login login = new Login();
+                Job job = new Job (id.getId(), title.getText(), description.getText(), Double.parseDouble(proposedPrice.getText()), "OPEN", login.getUser(), fileName);
+                job.insertDB();
+                saveImage();
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Successfully created post");
+                alert.setContentText("The Post has been created successfully");
+                alert.show();
+                ((Node)(event.getSource())).getScene().getWindow().hide();
+            }
+            else
+            {
+                proposedPriceError.setText("Please enter a valid price.!");
+            }
+        });
     }
 
     @Override
@@ -87,6 +112,17 @@ public class JobPost extends Post{
         {
             e.printStackTrace();
         }
+    }
 
+
+    @FXML private boolean checkPrice(String area) {
+        if(!(area.contains("[0-9]")))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 }
