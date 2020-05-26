@@ -7,15 +7,17 @@ public abstract class Post {
     private String creator_id;
     private String status;
     private String replies;
+    private String fileName;
 
     //constructor to create a new post
-    public Post (String postId, String title, String description, String status, String creator_id)
+    public Post (String postId, String title, String description, String status, String creator_id, String fileName)
     {
         this.postId = postId;
         this.title = title;
         this.description = description;
         this.status = status;
         this.creator_id = creator_id;
+        this.fileName = fileName;
     }
 
 
@@ -109,10 +111,16 @@ public abstract class Post {
         return this.postId;
     }
 
+    abstract public void generateId();
 
     //mutator for id
     public void setPostId(String postId)
     {
-        this.postId = postId;
+
+       this.postId =  postId;
+    }
+
+    public String getFileName() {
+        return fileName;
     }
 }

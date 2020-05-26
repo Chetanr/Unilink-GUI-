@@ -12,12 +12,12 @@ public class Event extends Post{
     private String date;
     private int capacity;
     private int attendee_count;
-    final String DB_NAME = "Unilink";
-    final String TABLE_NAME = "EVENTPOST";
+    private final String DB_NAME = "Unilink";
+    private final String TABLE_NAME = "EVENTPOST";
 
 
-    public Event(String id, String title, String description, String venue, String date, int capacity, String status, String creator_id) {
-        super(id, title, description, status, creator_id);
+    public Event(String id, String title, String description, String venue, String date, int capacity, String status, String creator_id, String fileName) {
+        super(id, title, description, status, creator_id, fileName);
         this.venue = venue;
         this.date = date;
         this.capacity = capacity;
@@ -38,9 +38,11 @@ public class Event extends Post{
         try (Connection con = ConnectionTest.getConnection(DB_NAME);
              Statement stmt = con.createStatement();
         ) {
+            generateId();
             String query = "INSERT INTO " + TABLE_NAME +
-                    " VALUES (" + "'"+getCreatorId()+"'" + " ," + "'"+ getPostId()+"'" + " ," + "'"+getTitle()+"'" + " ," + "'"+getDescription()+"'" +
-                    " ," +  "'"+getStatus()+"'" + " ," +  "'"+getVenue()+"'" + " ," + "'"+getDate()+"'"  + " ," + "'"+getCapacity()+"'" + " )";
+                    " VALUES (" + "'" + getCreatorId() + "'" + " ," + "'" + getPostId() + "'" + " ," + "'" + getTitle() + "'" + " ," + "'" + getDescription() + "'" +
+                    " ," +  "'" + getStatus() + "'" + " ," +  "'" + getVenue() + "'" + " ," + "'" + getDate() + "'"  + " ," + "'" + getCapacity() + "'" + " ,"
+                    +  "'" + getFileName() + "'" + " )";
 
             int result = stmt.executeUpdate(query);
 
@@ -85,5 +87,13 @@ public class Event extends Post{
 
     public void setAttendee_count(int attendee_count) {
         this.attendee_count = attendee_count;
+    }
+
+    @Override
+    public void generateId()
+    {
+        String temp = getPostId();
+        temp = "EVE" + (Integer.parseInt(temp.substring(3)) + 1);
+        setPostId(temp);
     }
 }

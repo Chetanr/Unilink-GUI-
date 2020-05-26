@@ -11,8 +11,8 @@ public class Job extends Post{
     private int lowest_offer;
 
 
-    public Job(String id, String title, String description, int proposedPrice, String status, String creator_id) {
-        super(id, title, description, status, creator_id);
+    public Job(String id, String title, String description, int proposedPrice, String status, String creator_id, String fileName) {
+        super(id, title, description, status, creator_id, fileName);
         this.proposed_price = proposedPrice;
     }
 
@@ -52,6 +52,14 @@ public class Job extends Post{
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    @Override
+    public void generateId()
+    {
+        String temp = getPostId();
+        temp = "JOB" + (Integer.parseInt(temp.substring(3)) + 1);
+        setPostId(temp);
     }
 
 

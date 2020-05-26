@@ -28,7 +28,8 @@ public class CreateTable {
 					+ "title VARCHAR(20) NOT NULL,"
 					+ "description VARCHAR(200) NOT NULL,"
 					+ "status VARCHAR(6) NOT NULL,"
-					+ "asking_price int NOT NULL,"
+					+ "asking_price DECIMAL(5,2) NOT NULL,"
+					+ "image_name VARCHAR(100),"
 					+ "PRIMARY KEY (post_id))");
 			if(result == 0) {
 				System.out.println("Table " + JOB_TABLE + " has been created successfully");
@@ -50,8 +51,9 @@ public class CreateTable {
 					+ "title VARCHAR(20) NOT NULL,"
 					+ "description VARCHAR(200) NOT NULL,"
 					+ "status VARCHAR(6) NOT NULL,"
-					+ "asking_price int NOT NULL,"
-					+ "minimum_raise int NOT NULL,"
+					+ "asking_price DECIMAL(6,2) NOT NULL,"
+					+ "minimum_raise DECIMAL(6,2) NOT NULL,"
+					+ "image_name VARCHAR(100),"
 					+ "PRIMARY KEY (post_id))");
 			if(result == 0) {
 				System.out.println("Table " + SALE_TABLE + " has been created successfully");
@@ -78,6 +80,7 @@ public class CreateTable {
 					+ "venue VARCHAR(10) NOT NULL,"
 					+ "date DATE NOT NULL,"
 					+ "capacity int NOT NULL,"
+					+ "image_name VARCHAR(100),"
 					+ "PRIMARY KEY (post_id))");
 			if(result == 0) {
 				System.out.println("Table " + EVENT_TABLE + " has been created successfully");

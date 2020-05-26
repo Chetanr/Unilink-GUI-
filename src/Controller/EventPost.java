@@ -1,6 +1,7 @@
 package Controller;
 
 import Model.Event;
+import Model.GenerateId;
 import javafx.event.ActionEvent;
 import javafx.fxml.*;
 import javafx.scene.Node;
@@ -29,8 +30,7 @@ public class EventPost {
     @FXML private Button savePost;
 
 
-    private String fileName;
-    private String filePath;
+    private String fileName = "No Preview";
     FileChooser fileChooser = new FileChooser();
     File file;
 
@@ -51,10 +51,10 @@ public class EventPost {
                     e.printStackTrace();
                 }
             }
-            else
-            {
-
-            }
+//            else
+//            {
+//
+//            }
         });
     }
 
@@ -63,41 +63,40 @@ public class EventPost {
     }
 
     @FXML private void deletePost(ActionEvent actionEvent) {
-        System.out.println(fileName);
-        saveImage();
     }
 
     @FXML private void savePost(ActionEvent actionEvent) {
         savePost.setOnMouseClicked((event) -> {
-            checkCapacity();
-            Event ev = new Event ("EVE1", title.getText(), description.getText(), venue.getText(), date.getValue().toString(), Integer.parseInt(capacity.getText()), "OPEN", "s1" );
-            ev.insertDB();
-            //saveImage();
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Successfully created post");
-            alert.setContentText("The Post has been created successfully");
-            alert.show();
-            ((Node)(event.getSource())).getScene().getWindow().hide();
+            if (checkCapacity())
+            {
+                GenerateId id = new GenerateId();
+                Event ev = new Event (id.getId(), title.getText(), description.getText(), venue.getText(), date.getValue().toString(), Integer.parseInt(capacity.getText()), "OPEN", "s1", fileName );
+                ev.insertDB();
+                saveImage();
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Successfully created post");
+                alert.setContentText("The Post has been created successfully");
+                alert.show();
+                ((Node)(event.getSource())).getScene().getWindow().hide();
+            }
+            else
+            {
+                capacityError.setText("Please enter a number");
+            }
         });
-
-
-
     }
 
     private void saveImage() {
         try
         {
             String path = "./src/Images/" + fileName;
-            //String path = System.getProperty("user.dir");
             System.out.println(path);
             File dest = new File(path);
             Files.copy(file.toPath(), dest.toPath(), StandardCopyOption.REPLACE_EXISTING);
-           //ImageIO.write(ImageIO.read(file),"jpeg", new File("./src/images/" + fileName));
         } catch(Exception e)
         {
             e.printStackTrace();
         }
-
     }
 
     @FXML private void back(ActionEvent actionEvent) {
@@ -106,14 +105,14 @@ public class EventPost {
         });
     }
 
-    @FXML private void checkCapacity() {
+    @FXML private boolean checkCapacity() {
         if(!(capacity.getText().contains("[0-9]")))
         {
-            capacityError.setText("Please enter a number");
+            return false;
         }
         else
         {
-            capacityError.setText("");
+            return true;
         }
     }
 }
