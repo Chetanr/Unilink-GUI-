@@ -15,7 +15,9 @@ import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 
-public class SalePost {
+
+
+public class SalePost extends Post{
 
 
     @FXML private Label minRaiseError;
@@ -37,13 +39,15 @@ public class SalePost {
     File file;
 
 
-    @FXML private void back(ActionEvent actionEvent) {
+    @Override
+    @FXML protected void back(ActionEvent actionEvent) {
         back.setOnMouseClicked((event) -> {
             ((Node)(event.getSource())).getScene().getWindow().hide();
         });
     }
 
-    @FXML private void upload(ActionEvent actionEvent) {
+    @Override
+    @FXML protected void upload(ActionEvent actionEvent) {
         upload.setOnMouseClicked((event) ->
         {
             FileChooser.ExtensionFilter imageFilter = new FileChooser.ExtensionFilter("Image Files", "*.jpg", "*.png");
@@ -67,13 +71,16 @@ public class SalePost {
         });
     }
 
-    @FXML private void closePost(ActionEvent actionEvent) {
+    @Override
+    @FXML protected void closePost(ActionEvent actionEvent) {
     }
 
-    @FXML private void deletePost(ActionEvent actionEvent) {
+    @Override
+    @FXML protected void deletePost(ActionEvent actionEvent) {
     }
 
-    @FXML private void savePost(ActionEvent actionEvent) {
+    @Override
+    @FXML protected void savePost(ActionEvent actionEvent) {
         savePost.setOnMouseClicked((event) -> {
             if(checkPrice(askingPrice))
             {
@@ -101,7 +108,8 @@ public class SalePost {
         });
     }
 
-    private void saveImage() {
+    @Override
+    protected void saveImage() {
         try
         {
             String path = "./src/Images/" + fileName;

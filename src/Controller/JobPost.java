@@ -11,8 +11,10 @@ import javafx.stage.FileChooser;
 
 import java.io.File;
 import java.net.MalformedURLException;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 
-public class JobPost {
+public class JobPost extends Post{
 
 
     @FXML private ImageView imageView;
@@ -25,19 +27,26 @@ public class JobPost {
     @FXML private TextArea title;
     @FXML private Button back;
 
-    @FXML private void back(ActionEvent actionEvent) {
+    private String fileName = "No Preview";
+    private FileChooser fileChooser = new FileChooser();
+    private File file;
+
+    @Override
+    @FXML protected void back(ActionEvent actionEvent) {
         back.setOnMouseClicked((event) -> {
             ((Node)(event.getSource())).getScene().getWindow().hide();
         });
     }
 
-    @FXML private void upload(ActionEvent actionEvent) {
+    @Override
+    @FXML protected void upload(ActionEvent actionEvent) {
         upload.setOnMouseClicked((event) ->
         {
             FileChooser.ExtensionFilter imageFilter = new FileChooser.ExtensionFilter("Image Files", "*.jpg", "*.png");
-            FileChooser fileChooser = new FileChooser();
+            fileChooser = new FileChooser();
             fileChooser.getExtensionFilters().add(imageFilter);
-            File file = fileChooser.showOpenDialog(null);
+            file = fileChooser.showOpenDialog(null);
+            fileName = file.getAbsoluteFile().getName();
             if (file != null)
             {
                 try {
@@ -54,12 +63,30 @@ public class JobPost {
         });
     }
 
-    @FXML private void closePost(ActionEvent actionEvent) {
+    @Override
+    @FXML protected void closePost(ActionEvent actionEvent) {
     }
 
-    @FXML private void deletePost(ActionEvent actionEvent) {
+    @Override
+    @FXML protected void deletePost(ActionEvent actionEvent) {
     }
 
-    @FXML private void savePost(ActionEvent actionEvent) {
+    @Override
+    @FXML protected void savePost(ActionEvent actionEvent) {
+    }
+
+    @Override
+    protected void saveImage() {
+        try
+        {
+            String path = "./src/Images/" + fileName;
+            System.out.println(path);
+            File dest = new File(path);
+            Files.copy(file.toPath(), dest.toPath(), StandardCopyOption.REPLACE_EXISTING);
+        } catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+
     }
 }

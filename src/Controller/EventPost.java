@@ -15,7 +15,7 @@ import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 
 
-public class EventPost {
+public class EventPost extends Post{
     @FXML private Label capacityError;
     @FXML private ImageView imageView;
     @FXML private DatePicker date;
@@ -31,11 +31,12 @@ public class EventPost {
 
 
     private String fileName = "No Preview";
-    FileChooser fileChooser = new FileChooser();
-    File file;
+    private FileChooser fileChooser = new FileChooser();
+    private File file;
 
 
-    @FXML private void upload(ActionEvent actionEvent) {
+    @Override
+    @FXML public void upload(ActionEvent actionEvent) {
         upload.setOnMouseClicked((event) ->
         {
             FileChooser.ExtensionFilter imageFilter = new FileChooser.ExtensionFilter("Image Files", "*.jpg", "*.png");
@@ -59,13 +60,16 @@ public class EventPost {
     }
 
 
-    @FXML private void closePost(ActionEvent actionEvent) {
+    @Override
+    @FXML public void closePost(ActionEvent actionEvent) {
     }
 
-    @FXML private void deletePost(ActionEvent actionEvent) {
+    @Override
+    @FXML public void deletePost(ActionEvent actionEvent) {
     }
 
-    @FXML private void savePost(ActionEvent actionEvent) {
+    @Override
+    @FXML public void savePost(ActionEvent actionEvent) {
         savePost.setOnMouseClicked((event) -> {
             if (checkCapacity())
             {
@@ -86,7 +90,8 @@ public class EventPost {
         });
     }
 
-    private void saveImage() {
+    @Override
+     protected void saveImage() {
         try
         {
             String path = "./src/Images/" + fileName;
@@ -99,7 +104,9 @@ public class EventPost {
         }
     }
 
-    @FXML private void back(ActionEvent actionEvent) {
+    @Override
+    @FXML
+    protected void back(ActionEvent actionEvent) {
         back.setOnMouseClicked((event) -> {
             ((Node)(event.getSource())).getScene().getWindow().hide();
         });
