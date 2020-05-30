@@ -63,6 +63,9 @@ public class Sale extends Post {
     }
 
 
+
+
+
     public double getAskingPrice() {
         return askingPrice;
     }

@@ -36,6 +36,11 @@ public class GenerateId {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+
+        if (pid == null)
+        {
+            return "EVE0";
+        }
         return pid;
     }
 }

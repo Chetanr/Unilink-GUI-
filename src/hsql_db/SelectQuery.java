@@ -13,7 +13,7 @@ public class SelectQuery {
 		try (Connection con = ConnectionTest.getConnection(DB_NAME);
 				Statement stmt = con.createStatement();
 		) {
-			String query = "SELECT post_id FROM " + TABLE_NAME + " order by creator_id, post_id DESC LIMIT 1";
+			String query = "SELECT post_id, title, description, status, venue, date, creator_id, image_name FROM " + TABLE_NAME;
 
 
 			
@@ -22,7 +22,9 @@ public class SelectQuery {
 //					System.out.printf("Id: %d | Student Number: %s | First Name: %s | Last Name: %s\n",
 //							resultSet.getInt("id"), resultSet.getString("student_number"),
 //							resultSet.getString("first_name"), resultSet.getString("last_name"));
-					System.out.println(resultSet.getString("post_id"));
+					System.out.println(resultSet.getString("post_id") + " " + resultSet.getString("title") + " " + resultSet.getString("description") +
+							" " + resultSet.getString("status") + " " + resultSet.getString("venue") + " " + resultSet.getString("date") + " " + resultSet.getString("image_name")
+					+  " " + resultSet.getString("creator_id"));
 				}
 			} catch (SQLException e) {
 				System.out.println(e.getMessage());

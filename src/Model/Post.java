@@ -112,6 +112,7 @@ public abstract class Post {
     }
 
     abstract public void generateId();
+//    abstract public void selectDB();
 
     //mutator for id
     public void setPostId(String postId)

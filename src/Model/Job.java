@@ -64,6 +64,7 @@ public class Job extends Post{
         setPostId(temp);
     }
 
+
     public double getProposedPrice() {
         return proposed_price;
     }

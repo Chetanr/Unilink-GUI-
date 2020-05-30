@@ -67,7 +67,7 @@ public class Login {
 
     //getter for username. This is done to display the username in the mainWindow
     public String getUser() {
-        return user;
+        return this.user;
     }
 
 

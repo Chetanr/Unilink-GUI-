@@ -4,7 +4,6 @@ import hsql_db.ConnectionTest;
 
 import java.sql.Connection;
 import java.sql.Statement;
-import java.util.Date;
 
 public class Event extends Post{
 
@@ -16,12 +15,14 @@ public class Event extends Post{
     private final String TABLE_NAME = "EVENTPOST";
 
 
+
     public Event(String id, String title, String description, String venue, String date, int capacity, String status, String creator_id, String fileName) {
         super(id, title, description, status, creator_id, fileName);
         this.venue = venue;
         this.date = date;
         this.capacity = capacity;
     }
+
 
     @Override
     public boolean handleReply(Reply reply) {
@@ -40,7 +41,7 @@ public class Event extends Post{
         ) {
             generateId();
             String query = "INSERT INTO " + TABLE_NAME +
-                    " VALUES (" + "'" + getCreatorId() + "'" + " ," + "'" + getPostId() + "'" + " ," + "'" + getTitle() + "'" + " ," + "'" + getDescription() + "'" +
+                    " VALUES ( " + "'" + getCreatorId() + "'" + " ," + "'" + getPostId() + "'" + " ," + "'" + getTitle() + "'" + " ," + "'" + getDescription() + "'" +
                     " ," +  "'" + getStatus() + "'" + " ," +  "'" + getVenue() + "'" + " ," + "'" + getDate() + "'"  + " ," + "'" + getCapacity() + "'" + " ,"
                     +  "'" + getFileName() + "'" + " )";
 
@@ -57,37 +58,8 @@ public class Event extends Post{
     }
 
 
-    public String getVenue() {
-        return venue;
-    }
 
-    public void setVenue(String venue) {
-        this.venue = venue;
-    }
 
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
-    }
-
-    public int getCapacity() {
-        return capacity;
-    }
-
-    public void setCapacity(int capacity) {
-        this.capacity = capacity;
-    }
-
-    public int getAttendee_count() {
-        return attendee_count;
-    }
-
-    public void setAttendee_count(int attendee_count) {
-        this.attendee_count = attendee_count;
-    }
 
     @Override
     public void generateId()
@@ -96,4 +68,22 @@ public class Event extends Post{
         temp = "EVE" + (Integer.parseInt(temp.substring(3)) + 1);
         setPostId(temp);
     }
+
+
+    public String getVenue() {
+        return venue;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public int getCapacity() {
+        return capacity;
+    }
+
+    public int getAttendee_count() {
+        return attendee_count;
+    }
+
 }
