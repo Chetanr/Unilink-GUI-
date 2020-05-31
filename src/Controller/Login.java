@@ -1,3 +1,8 @@
+/*
+This controller class controls as the elements
+of the Login.fxml file
+ */
+
 package Controller;
 
 import javafx.fxml.FXMLLoader;

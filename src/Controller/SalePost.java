@@ -1,3 +1,8 @@
+/*
+This controller class controls as the elements
+of the SalePost.fxml file
+ */
+
 package Controller;
 
 import Model.GenerateId;
@@ -38,7 +43,7 @@ public class SalePost extends Post{
     FileChooser fileChooser = new FileChooser();
     File file;
 
-
+    //method for "back to main window" button
     @Override
     @FXML protected void back(ActionEvent actionEvent) {
         back.setOnMouseClicked((event) -> {
@@ -46,6 +51,7 @@ public class SalePost extends Post{
         });
     }
 
+    //method for upload button
     @Override
     @FXML protected void upload(ActionEvent actionEvent) {
         upload.setOnMouseClicked((event) ->
@@ -71,6 +77,8 @@ public class SalePost extends Post{
         });
     }
 
+
+    //method for close post button
     @Override
     @FXML protected void closePost(ActionEvent actionEvent) {
     }
@@ -79,6 +87,8 @@ public class SalePost extends Post{
     @FXML protected void deletePost(ActionEvent actionEvent) {
     }
 
+
+    //method to save image in local project folder
     @Override
     @FXML protected void savePost(ActionEvent actionEvent) {
         savePost.setOnMouseClicked((event) -> {
@@ -88,7 +98,7 @@ public class SalePost extends Post{
                 {
                     GenerateId id = new GenerateId();
                     Login login = new Login();
-                    Sale sale = new Sale (id.getId(), title.getText(), description.getText(), Double.parseDouble(askingPrice.getText()), Double.parseDouble(minimumRaise.getText()),  "OPEN", login.getUser(), fileName );
+                    Sale sale = new Sale (id.getSaleId(), title.getText(), description.getText(), Double.parseDouble(askingPrice.getText()), Double.parseDouble(minimumRaise.getText()),  "OPEN", login.getUser(), fileName );
                     sale.insertDB();
                     saveImage();
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -109,6 +119,7 @@ public class SalePost extends Post{
         });
     }
 
+    //method to save the image into local project folder
     @Override
     protected void saveImage() {
         try
@@ -123,6 +134,7 @@ public class SalePost extends Post{
         }
     }
 
+    //method to check if the user has entered a valid input as number
     @FXML private boolean checkPrice(String area) {
         if(!(area.contains("[0-9]")))
         {

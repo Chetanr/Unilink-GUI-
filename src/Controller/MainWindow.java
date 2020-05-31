@@ -1,6 +1,15 @@
+/*
+This controller class controls as the elements
+of the MainWindow.fxml file
+ */
+
+
 package Controller;
 
+import com.sun.tools.javac.Main;
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
@@ -12,19 +21,19 @@ import javafx.scene.control.*;
 import javafx.fxml.FXML;
 import javafx.event.*;
 import javafx.scene.image.Image;
+import javafx.scene.layout.Background;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import Model.GetPost;
-import javafx.util.Callback;
 
-import javax.imageio.ImageIO;
-import javax.swing.text.Element;
 import javafx.scene.image.ImageView;
 
 public class MainWindow implements Initializable {
@@ -35,7 +44,7 @@ public class MainWindow implements Initializable {
     @FXML private Button salePost;
     @FXML private Button eventPost;
     @FXML private Label welcomeLabel;
-    @FXML private ListView list;
+    @FXML private ListView list = null;
     @FXML private Button logout;
     @FXML private Menu unilinkMenu;
     @FXML private MenuItem im_port;
@@ -48,45 +57,166 @@ public class MainWindow implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-       postType.getItems().add("All Posts");
-       postType.getItems().add("Event Post");
-       postType.getItems().add("Sale Post");
-       postType.getItems().add("Job Post");
-
-       postStatus.getItems().add("Open");
-       postStatus.getItems().add("Closed");
-
-       postCreator.getItems().add("My Post");
-       postCreator.getItems().add("All Post");
 
 
-       GetPost getPost = new GetPost();
-       getPost.selectDB();
-        try {
-            displayListView(getPost.getEventPosts());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-//       list.getItems().add(getPost.getEventPosts());
-       Login login = new Login();
+        GetPost getPost = new GetPost();
+        getPost.selectDB();
+
+        postType.getItems().add("All");
+        postType.getItems().add("Event");
+        postType.getItems().add("Sale");
+        postType.getItems().add("Job");
+        postType.setValue("All");
+
+        postStatus.getItems().add("All");
+        postStatus.getItems().add("Open");
+        postStatus.getItems().add("Closed");
+        postStatus.setValue("All");
+
+        postCreator.getItems().add("My Post");
+        postCreator.getItems().add("All Post");
+        postCreator.setValue("All Posts");
+
+//        postType.showingProperty().addListener((v, olderValue, newValue)->
+//        {
+//            if (newValue.equals("Event")) {
+//                try {
+//                    displayEventPost(getPost.getEventPosts());
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//            else if (newValue.equals("Sale"))
+//                displaySalePost(getPost.getSalePosts());
+//            else if (newValue.equals("Job"))
+//                displayJobPost(getPost.getJobPosts());
+//        });
+
+        postType.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
+                if (t1.equals("Event")) {
+                    list.getItems().clear();
+                try {
+                    displayEventPost(getPost.getEventPosts());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            else if (t1.equals("Sale"))
+                {
+                    list.getItems().clear();
+                    displaySalePost(getPost.getSalePosts());
+                }
+            else if (t1.equals("Job"))
+                {
+                    list.getItems().clear();
+                    displayJobPost(getPost.getJobPosts());
+                }
+            else
+                {
+                    list.getItems().clear();
+                    displayJobPost(getPost.getJobPosts());
+                    try {
+                        displayEventPost(getPost.getEventPosts());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    displaySalePost(getPost.getSalePosts());
+                }
+
+            }
+        });
+
+
+
+
+//        Platform.runLater(() -> {
+//            try {
+//                displayEventPost(getPost.getEventPosts());
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//            displayJobPost(getPost.getJobPosts());
+//            displaySalePost(getPost.getSalePosts());
+//        });
+        Login login = new Login();
        welcomeLabel.setText("Welcome " + login.getUser());
     }
 
-    private void displayListView(StringBuilder eventPosts) throws IOException {
-        String[] temp = eventPosts.toString().split(" ");
-        String[] temp2 = {"Post ID: ", "Title: ", "Description: ", "Status: ", "Venue: ",
-        "Date: ", "Image: "};
+    //displaying the job posts on listview
+    private void displayJobPost(StringBuilder jobPosts) {
+        String[] finalTemp = setJob(jobPosts);
+        populateListView(finalTemp);
+//        list.setItems(postList);
+//        list.setCellFactory(param -> new ListCell<String>()
+//        {
+//            private ImageView imageView = new ImageView();
+//            @Override
+//            public void updateItem(String name, boolean empty) {
+//                super.updateItem(name, empty);
+//
+//                Image image = null;
+//                if (empty) {
+//                    setText(null);
+//                    setGraphic(null);
+//                }
+//                else {
+//                    for (String i : finalTemp)
+//                    {
+//                        if (i != null)
+//                        {
+//                            String path = "./src/Images/" + i;
+//                            File dest = new File(path);
+//                            try {
+//                                image = new Image(dest.toURI().toURL().toString());
+//                            } catch (MalformedURLException e) {
+//                                e.printStackTrace();
+//                            }
+//                            imageView.setImage(image);
+//                            imageView.setFitHeight(50);
+//                            imageView.setFitWidth(50);
+//                            setStyle("-fx-background-color: #8f8;");
+//                        }
+////                        else if (i == null)
+////                        {
+////                            break;
+////                        }
+//
+//                    }
+//                    setText(name);
+//                    setGraphic(imageView);
+//
+//                }
+//            }
+//        });
+    }
+
+    private String[] setJob(StringBuilder jobPosts) {
+        String[] temp = jobPosts.toString().split(" ");
+        String[] temp2 = {"Post ID: ", "Title: ", "Description: ", "Status: ", "Proposed Offer: ", "Image: "};
         String temp3 = "";
+        String[] temp4 = new String[temp.length];
         int k = 0;
         int i = 0;
         int j = 0;
+        int l = 0;
         while(i != temp.length - 1)
         {
             while(j != temp2.length)
             {
                 if(!(temp[i].contains("|")))
                 {
-                    temp3 = temp3.concat(temp2[j++].concat(temp[i++]).concat("\n"));
+                    if(temp2[j].contains("Image"))
+                    {
+                        temp4[l++] = temp[i++];
+                        j++;
+                    }
+                    else
+                    {
+                        temp3 = temp3.concat(temp2[j++].concat(temp[i++]).concat("\n"));
+                    }
+
                 }
                 else
                 {
@@ -98,31 +228,224 @@ public class MainWindow implements Initializable {
             k++;
             j = 0;
         }
-        list.setItems(postList);
+        return temp4;
+    }
 
+
+    //displaying the sale posts on listview
+    private void displaySalePost(StringBuilder jobPosts) {
+        String[] finalTemp = setSale(jobPosts);
+        populateListView(finalTemp);
+//        list.setItems(postList);
+//        list.setCellFactory(param -> new ListCell<String>()
+//        {
+//            private ImageView imageView = new ImageView();
+//            @Override
+//            public void updateItem(String name, boolean empty) {
+//                super.updateItem(name, empty);
+//                Image image = null;
+//                if (empty) {
+//                    setText(null);
+//                    setGraphic(null);
+//                }
+//                else {
+//                    for (String i : finalTemp)
+//                    {
+//                        if (i != null)
+//                        {
+//                            String path = "./src/Images/" + i;
+//                            File dest = new File(path);
+//                            try {
+//                                image = new Image(dest.toURI().toURL().toString());
+//                            } catch (MalformedURLException e) {
+//                                e.printStackTrace();
+//                            }
+//                            imageView.setImage(image);
+//                            imageView.setFitHeight(50);
+//                            imageView.setFitWidth(50);
+//                        }
+//                        else if (i == null)
+//                        {
+//                            break;
+//                        }
+//
+//                    }
+//                    setText(name);
+//                    setGraphic(imageView);
+//                    setStyle("-fx-background-color: #AAAA;");
+//                }
+//            }
+//        });
+    }
+
+    private String[] setSale(StringBuilder jobPosts) {
+        String[] temp = jobPosts.toString().split(" ");
+        String[] temp2 = {"Post ID: ", "Title: ", "Description: ", "Status: ", "Asking Price: ", "Image: "};
+        String temp3 = "";
+        String[] temp4 = new String[temp.length];
+        int k = 0;
+        int i = 0;
+        int j = 0;
+        int l = 0;
+        while(i != temp.length - 1)
+        {
+            while(j != temp2.length)
+            {
+                if(!(temp[i].contains("|")))
+                {
+                    if(temp2[j].contains("Image"))
+                    {
+                        temp4[l++] = temp[i++];
+                        j++;
+                    }
+                    else
+                    {
+                        temp3 = temp3.concat(temp2[j++].concat(temp[i++]).concat("\n"));
+                    }
+
+                }
+                else
+                {
+                    i++;
+                }
+            }
+            postList.add(temp3);
+            temp3 = "";
+            k++;
+            j = 0;
+        }
+        return temp4;
+    }
+
+    private void populateListView(String[] finalTemp)
+    {
+        list.setItems(postList);
         list.setCellFactory(param -> new ListCell<String>()
         {
             private ImageView imageView = new ImageView();
-            private Image image;
             @Override
             public void updateItem(String name, boolean empty) {
                 super.updateItem(name, empty);
+                Image image = null;
                 if (empty) {
                     setText(null);
                     setGraphic(null);
-                } else {
-                    if (name.equals(postList.toString()))
+                }
+                else {
+                    for (String i : finalTemp)
                     {
-                        image = new Image(String.valueOf(getClass().getResource("/src/Images/")));
-                        imageView.setImage(image);
+                        if (i != null)
+                        {
+                            String path = "./src/Images/" + i;
+                            File dest = new File(path);
+                            try {
+                                image = new Image(dest.toURI().toURL().toString());
+                            } catch (MalformedURLException e) {
+                                e.printStackTrace();
+                            }
+                            imageView.setImage(image);
+                            imageView.setFitHeight(50);
+                            imageView.setFitWidth(50);
+                        }
+                        else if (i == null)
+                        {
+                            break;
+                        }
+
                     }
                     setText(name);
                     setGraphic(imageView);
+                    setStyle("-fx-background-color: #8f8;");
                 }
             }
         });
     }
 
+    //displaying the event posts on listview
+    private void displayEventPost(StringBuilder Posts) throws IOException {
+        String[] finalTemp = setlistView(Posts);
+        populateListView(finalTemp);
+//        list.setItems(postList);
+//        list.setCellFactory(param -> new ListCell<String>()
+//        {
+//            private ImageView imageView = new ImageView();
+//            @Override
+//            public void updateItem(String name, boolean empty) {
+//                super.updateItem(name, empty);
+//                Image image = null;
+//                if (empty) {
+//                    setText(null);
+//                    setGraphic(null);
+//                }
+//                else {
+//                    for (String i : finalTemp)
+//                    {
+//                        if (i != null)
+//                        {
+//                            String path = "./src/Images/" + i;
+//                            File dest = new File(path);
+//                            try {
+//                                image = new Image(dest.toURI().toURL().toString());
+//                            } catch (MalformedURLException e) {
+//                                e.printStackTrace();
+//                            }
+//                            imageView.setImage(image);
+//                            imageView.setFitHeight(50);
+//                            imageView.setFitWidth(50);
+//                        }
+//                        else if (i == null)
+//                        {
+//                            break;
+//                        }
+//
+//                    }
+//                    setText(name);
+//                    setGraphic(imageView);
+//                    setStyle("-fx-background-color: #8f8;");
+//                }
+//            }
+//        });
+    }
+
+    private String[] setlistView(StringBuilder eventPosts) {
+        String[] temp = eventPosts.toString().split(" ");
+        String[] temp2 = {"Post ID: ", "Title: ", "Description: ", "Status: ", "Venue: ",
+                "Date: ", "Image: "};
+        String temp3 = "";
+        String[] temp4 = new String[temp.length];
+        int k = 0;
+        int i = 0;
+        int j = 0;
+        int l = 0;
+        while(i != temp.length - 1)
+        {
+            while(j != temp2.length)
+            {
+                if(!(temp[i].contains("|")))
+                {
+                    if(temp2[j].contains("Image"))
+                    {
+                        temp4[l++] = temp[i++];
+                        j++;
+                    }
+                    else
+                    {
+                        temp3 = temp3.concat(temp2[j++].concat(temp[i++]).concat("\n"));
+                    }
+
+                }
+                else
+                {
+                    i++;
+                }
+            }
+            postList.add(temp3);
+            temp3 = "";
+            k++;
+            j = 0;
+        }
+        return temp4;
+    }
 
 
     //method for creating a new sale post

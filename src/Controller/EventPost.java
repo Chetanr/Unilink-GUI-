@@ -1,3 +1,8 @@
+/*
+This controller class controls as the elements
+of the EventPost.fxml file
+ */
+
 package Controller;
 
 import Model.Event;
@@ -35,6 +40,7 @@ public class EventPost extends Post{
     private File file;
 
 
+    //method for upload button
     @Override
     @FXML public void upload(ActionEvent actionEvent) {
         upload.setOnMouseClicked((event) ->
@@ -60,14 +66,17 @@ public class EventPost extends Post{
     }
 
 
+    //method for close post button
     @Override
     @FXML public void closePost(ActionEvent actionEvent) {
     }
 
+    //method for delete post button
     @Override
     @FXML public void deletePost(ActionEvent actionEvent) {
     }
 
+    //method for sale post button
     @Override
     @FXML public void savePost(ActionEvent actionEvent) {
         savePost.setOnMouseClicked((event) -> {
@@ -91,6 +100,8 @@ public class EventPost extends Post{
         });
     }
 
+
+    //method for save image button
     @Override
      protected void saveImage() {
         try
@@ -105,6 +116,8 @@ public class EventPost extends Post{
         }
     }
 
+
+    //method for back to main window button
     @Override
     @FXML
     protected void back(ActionEvent actionEvent) {
@@ -113,7 +126,9 @@ public class EventPost extends Post{
         });
     }
 
-    @FXML private boolean checkCapacity() {
+    //method to check if user has entered a number as capacity
+    @FXML
+    private boolean checkCapacity() {
         if(!(capacity.getText().contains("[0-9]")))
         {
             return true;

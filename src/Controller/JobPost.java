@@ -1,3 +1,8 @@
+/*
+This controller class controls as the elements
+of the JobPost.fxml file
+ */
+
 package Controller;
 
 import Model.Event;
@@ -37,6 +42,8 @@ public class JobPost extends Post{
     private FileChooser fileChooser = new FileChooser();
     private File file;
 
+
+    //method for back to main window button
     @Override
     @FXML protected void back(ActionEvent actionEvent) {
         back.setOnMouseClicked((event) -> {
@@ -44,6 +51,8 @@ public class JobPost extends Post{
         });
     }
 
+
+    ///method for upload button
     @Override
     @FXML protected void upload(ActionEvent actionEvent) {
         upload.setOnMouseClicked((event) ->
@@ -69,14 +78,20 @@ public class JobPost extends Post{
         });
     }
 
+
+    //method for close post button
     @Override
     @FXML protected void closePost(ActionEvent actionEvent) {
     }
 
+
+    //method for delete post button
     @Override
     @FXML protected void deletePost(ActionEvent actionEvent) {
     }
 
+
+    //method for save post button
     @Override
     @FXML protected void savePost(ActionEvent actionEvent) {
         savePost.setOnMouseClicked((event) -> {
@@ -84,7 +99,7 @@ public class JobPost extends Post{
             {
                 GenerateId id = new GenerateId();
                 Login login = new Login();
-                Job job = new Job (id.getId(), title.getText(), description.getText(), Double.parseDouble(proposedPrice.getText()), "OPEN", login.getUser(), fileName);
+                Job job = new Job (id.getJobId(), title.getText(), description.getText(), Double.parseDouble(proposedPrice.getText()), "OPEN", login.getUser(), fileName);
                 job.insertDB();
                 saveImage();
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -100,6 +115,8 @@ public class JobPost extends Post{
         });
     }
 
+
+    //method to save image in local project folder
     @Override
     protected void saveImage() {
         try

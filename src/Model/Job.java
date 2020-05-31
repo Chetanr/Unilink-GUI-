@@ -13,7 +13,7 @@ public class Job extends Post{
     private double lowest_offer;
 
     private final String DB_NAME = "Unilink";
-    private final String TABLE_NAME = "SALEPOST";
+    private final String TABLE_NAME = "JOBPOST";
 
     public Job(String id, String title, String description, double proposedPrice, String status, String creator_id, String fileName) {
         super(id, title, description, status, creator_id, fileName);
@@ -41,7 +41,7 @@ public class Job extends Post{
         ) {
             generateId();
             String query = "INSERT INTO " + TABLE_NAME +
-                    " VALUES (" + "'" + getCreatorId() + "'" + " ," + "'" + getPostId() + "'" + " ," + "'" + getTitle() + "'" + " ," + "'" + getDescription() + "'" +
+                    " VALUES ( " + "'" + getCreatorId() + "'" + " ," + "'" + getPostId() + "'" + " ," + "'" + getTitle() + "'" + " ," + "'" + getDescription() + "'" +
                     " ," +  "'" + getStatus() + "'" + " ," +  "'" + getProposedPrice() + "'"  + " ," + "'" + getFileName() + "'" + " )";
             int result = stmt.executeUpdate(query);
 
