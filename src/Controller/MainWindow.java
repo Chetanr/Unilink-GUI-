@@ -319,10 +319,11 @@ public class MainWindow implements Initializable {
 
     private void populateListView(String[] finalTemp)
     {
+        ImageView imageView = new ImageView();
         list.setItems(postList);
         list.setCellFactory(param -> new ListCell<String>()
         {
-            private ImageView imageView = new ImageView();
+
             @Override
             public void updateItem(String name, boolean empty) {
                 super.updateItem(name, empty);
@@ -332,11 +333,11 @@ public class MainWindow implements Initializable {
                     setGraphic(null);
                 }
                 else {
-                    for (String i : finalTemp)
+                    for (int i = 0; i < finalTemp.length ; i++)
                     {
-                        if (i != null)
-                        {
-                            String path = "./src/Images/" + i;
+//                        if (i != null)
+//                        {
+                            String path = "./src/Images/" + finalTemp[i];
                             File dest = new File(path);
                             try {
                                 image = new Image(dest.toURI().toURL().toString());
@@ -344,15 +345,15 @@ public class MainWindow implements Initializable {
                                 e.printStackTrace();
                             }
                             imageView.setImage(image);
-                            imageView.setFitHeight(50);
-                            imageView.setFitWidth(50);
+                            imageView.setFitHeight(60);
+                            imageView.setFitWidth(60);
                         }
-                        else if (i == null)
-                        {
-                            break;
-                        }
+//                        else if (i == null)
+//                        {
+//                            break;
+//                        }
 
-                    }
+//                    }
                     setText(name);
                     setGraphic(imageView);
                     setStyle("-fx-background-color: #8f8;");
