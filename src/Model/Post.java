@@ -20,8 +20,13 @@ public abstract class Post {
         this.fileName = fileName;
     }
 
-
-
+    public Post(String post_id, String title, String description, String status, String image_name) {
+        this.postId = post_id;
+        this.title = title;
+        this.description = description;
+        this.status = status;
+        this.fileName = image_name;
+    }
 
 
     //abstract method to handle reply

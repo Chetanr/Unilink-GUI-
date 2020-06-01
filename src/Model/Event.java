@@ -23,6 +23,12 @@ public class Event extends Post{
         this.capacity = capacity;
     }
 
+    public Event(String post_id, String title, String description, String status, String venue, String date, String image_name) {
+        super(post_id, title, description, status, image_name);
+        this.venue = venue;
+        this.date = date;
+    }
+
 
     @Override
     public boolean handleReply(Reply reply) {

@@ -20,6 +20,11 @@ public class Job extends Post{
         this.proposed_price = proposedPrice;
     }
 
+    public Job(String post_id, String title, String description, String status, double proposed_offer, String image_name) {
+        super(post_id, title, description, status, image_name);
+        this.proposed_price = proposed_offer;
+    }
+
 
     @Override
     public boolean handleReply(Reply reply) {

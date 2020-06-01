@@ -20,6 +20,11 @@ public class Sale extends Post {
         this.minimumRaise = minimumRaise;
     }
 
+    public Sale(String post_id, String title, String description, String status, double asking_price, String image_name) {
+        super(post_id, title, description, status, image_name);
+        this.askingPrice = asking_price;
+    }
+
     @Override
     public boolean handleReply(Reply reply) {
         return false;
