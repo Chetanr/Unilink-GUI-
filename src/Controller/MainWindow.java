@@ -22,14 +22,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.fxml.FXML;
 import javafx.event.*;
-import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -45,7 +42,7 @@ public class MainWindow implements Initializable {
     @FXML private Button salePost;
     @FXML private Button eventPost;
     @FXML private Label welcomeLabel;
-    @FXML private ListView list = null;
+    @FXML private ListView<String> list = null;
     @FXML private Button logout;
     @FXML private Menu unilinkMenu;
     @FXML private MenuItem im_port;
@@ -53,16 +50,60 @@ public class MainWindow implements Initializable {
     @FXML private MenuBar menuBar;
     @FXML private Menu data;
 
+    private String userName;
+
 
     ObservableList<String> postList = FXCollections.observableArrayList();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
-
         GetPost getPost = new GetPost();
         getPost.selectDB();
 
+        initialiseFilters();
+
+        checkPostFilters(getPost);
+
+    }
+
+    private void checkPostFilters(GetPost getPost) {
+        postType.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
+                if (t1.equals("Event")) {
+                    list.getItems().clear();
+                    try {
+                        displayEventPost(getPost.getEventPost());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                else if (t1.equals("Sale"))
+                {
+                    list.getItems().clear();
+                    displaySalePost(getPost.getSalePost());
+                }
+                else if (t1.equals("Job"))
+                {
+                    list.getItems().clear();
+                    displayJobPost(getPost.getJobPost());
+                }
+                else
+                {
+                    list.getItems().clear();
+                    displayJobPost(getPost.getJobPost());
+                    try {
+                        displayEventPost(getPost.getEventPost());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    displaySalePost(getPost.getSalePost());
+                }
+            }
+        });
+    }
+
+    private void initialiseFilters() {
         postType.getItems().add("All");
         postType.getItems().add("Event");
         postType.getItems().add("Sale");
@@ -77,46 +118,7 @@ public class MainWindow implements Initializable {
         postCreator.getItems().add("My Post");
         postCreator.getItems().add("All Post");
         postCreator.setValue("All Posts");
-
-        postType.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
-                if (t1.equals("Event")) {
-                    list.getItems().clear();
-                try {
-                    displayEventPost(getPost.getEventPost());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-            else if (t1.equals("Sale"))
-                {
-                    list.getItems().clear();
-                    displaySalePost(getPost.getSalePost());
-                }
-            else if (t1.equals("Job"))
-                {
-                    list.getItems().clear();
-                    displayJobPost(getPost.getJobPost());
-                }
-            else
-                {
-                    list.getItems().clear();
-                    displayJobPost(getPost.getJobPost());
-                    try {
-                        displayEventPost(getPost.getEventPost());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    displaySalePost(getPost.getSalePost());
-                }
-
-            }
-        });
-        Login login = new Login();
-       welcomeLabel.setText("Welcome " + login.getUser());
     }
-
 
 
     //display listview with job posts
@@ -346,11 +348,11 @@ public class MainWindow implements Initializable {
             public void handle(MouseEvent mouseEvent) {
                 FXMLLoader loader = new FXMLLoader();
                 try {
-                    ((Node) (mouseEvent.getSource())).getScene().getWindow().hide();
                     loader.setLocation(getClass().getResource("/View/ReplyJobPost.fxml"));
                     Scene scene = new Scene(loader.load());
                     Stage stage = new Stage();
                     stage.setScene(scene);
+                    stage.initModality(Modality.APPLICATION_MODAL);
                     stage.show();
                 } catch (IOException e) {
                     System.out.println("Could not open ReplyJobPost.fxml");
@@ -373,6 +375,7 @@ public class MainWindow implements Initializable {
                     Scene scene = new Scene(loader.load());
                     Stage stage = new Stage();
                     stage.setScene(scene);
+                    stage.initModality(Modality.APPLICATION_MODAL);
                     stage.show();
                 } catch (IOException e) {
                     System.out.println("Could not open ReplySalePost.fxml");
@@ -390,17 +393,28 @@ public class MainWindow implements Initializable {
             public void handle(MouseEvent mouseEvent) {
                 FXMLLoader loader = new FXMLLoader();
                 try {
-                    ((Node) (mouseEvent.getSource())).getScene().getWindow().hide();
+//                    ((Node) (mouseEvent.getSource())).getScene().getWindow().hide();
                     loader.setLocation(getClass().getResource("/View/ReplyEventPost.fxml"));
                     Scene scene = new Scene(loader.load());
                     Stage stage = new Stage();
                     stage.setScene(scene);
-                    stage.show();
+                    stage.initModality(Modality.APPLICATION_MODAL);
+                    stage.showAndWait();
                 } catch (IOException e) {
                     System.out.println("Could not open ReplyEventPost.fxml");
                     e.printStackTrace();
                 }
             }
         });
+    }
+
+
+    public void setUser(String userName) {
+        this.userName = userName;
+    }
+
+
+    public String getUserName() {
+        return this.userName;
     }
 }

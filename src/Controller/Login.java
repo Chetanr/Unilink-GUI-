@@ -7,6 +7,7 @@ package Controller;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.fxml.FXML;
@@ -36,7 +37,6 @@ public class Login {
         } else if (validateLogin(userName.getText()) == 1) {
             validate.setText("Hello " + userName.getText());
             setLogin(userName.getText());
-            setUser(userName.getText());
         } else {
             validate.setText("Invalid username. Please try again.!");
         }
@@ -55,12 +55,15 @@ public class Login {
     //method to open new window after successfull login validation
     private void setLogin(String user) {
         login.setOnMouseClicked((event) -> {
-            FXMLLoader loader = new FXMLLoader();
+
             try {
-                ((Node)(event.getSource())).getScene().getWindow().hide();
-                loader.setLocation(getClass().getResource("/view/MainWindow.fxml"));
-                Scene scene = new Scene(loader.load());
-                Stage stage = new Stage();
+//                ((Node)(event.getSource())).getScene().getWindow().hide();
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/MainWindow.fxml"));
+                Parent root = loader.load();
+                MainWindow login = loader.getController();
+                login.setUser(userName.getText());
+                Scene scene = new Scene(root);
+                Stage stage = (Stage)((Node)(event).getSource()).getScene().getWindow();
                 stage.setTitle("Welcome " + user + ".!");
                 stage.setScene(scene);
                 stage.show();
