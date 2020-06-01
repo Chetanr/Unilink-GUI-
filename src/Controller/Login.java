@@ -57,12 +57,15 @@ public class Login {
         login.setOnMouseClicked((event) -> {
 
             try {
-//                ((Node)(event.getSource())).getScene().getWindow().hide();
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/MainWindow.fxml"));
-                Parent root = loader.load();
+                loader.load();
                 MainWindow login = loader.getController();
                 login.setUser(userName.getText());
-                Scene scene = new Scene(root);
+                ((Node)(event.getSource())).getScene().getWindow().hide();
+                loader = new FXMLLoader(getClass().getResource("/view/MainWindow.fxml"));
+                Parent parent = loader.load();
+
+                Scene scene = new Scene(parent);
                 Stage stage = (Stage)((Node)(event).getSource()).getScene().getWindow();
                 stage.setTitle("Welcome " + user + ".!");
                 stage.setScene(scene);

@@ -50,7 +50,7 @@ public class MainWindow implements Initializable {
     @FXML private MenuBar menuBar;
     @FXML private Menu data;
 
-    private String userName;
+    private static String userName;
 
 
     ObservableList<String> postList = FXCollections.observableArrayList();
@@ -63,6 +63,8 @@ public class MainWindow implements Initializable {
         initialiseFilters();
 
         checkPostFilters(getPost);
+
+        welcomeLabel.setText("Welcome " + getUserName() + ".!");
 
     }
 
@@ -321,22 +323,27 @@ public class MainWindow implements Initializable {
         });
     }
 
-    public void reply(MouseEvent mouseEvent) {
-        list.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
+    @FXML private void reply() {
+        list.setOnMouseClicked(mouseEvent1 -> {
+            String temp = list.getSelectionModel().getSelectedItem();
+            System.out.println(temp);
 
-                String temp = list.getSelectionModel().getSelectedItems().toString();
-                System.out.println(temp);
-
-                if (temp.contains("EVE")) {
-                    displayEventReply(temp);
-                } else if (temp.contains("SAL")) {
-                    displaySaleReply(temp);
-                } else if (temp.contains("JOB")) {
-                    displayJobReply(temp);
-                }
+            if (temp.contains("EVE")) {
+                displayEventReply(temp);
+                list.getSelectionModel().clearSelection();
+            } else if (temp.contains("SAL")) {
+                displaySaleReply(temp);
+                list.getSelectionModel().clearSelection();
+            } else if (temp.contains("JOB")) {
+                displayJobReply(temp);
+                list.getSelectionModel().clearSelection();
             }
+            else
+            {
+//                mouseEvent.consume();
+                mouseEvent1.consume();
+            }
+            list.getSelectionModel().clearSelection();
         });
     }
 
@@ -370,7 +377,6 @@ public class MainWindow implements Initializable {
             public void handle(MouseEvent mouseEvent) {
                 FXMLLoader loader = new FXMLLoader();
                 try {
-                    ((Node) (mouseEvent.getSource())).getScene().getWindow().hide();
                     loader.setLocation(getClass().getResource("/View/ReplySalePost.fxml"));
                     Scene scene = new Scene(loader.load());
                     Stage stage = new Stage();
@@ -399,7 +405,7 @@ public class MainWindow implements Initializable {
                     Stage stage = new Stage();
                     stage.setScene(scene);
                     stage.initModality(Modality.APPLICATION_MODAL);
-                    stage.showAndWait();
+                    stage.show();
                 } catch (IOException e) {
                     System.out.println("Could not open ReplyEventPost.fxml");
                     e.printStackTrace();
