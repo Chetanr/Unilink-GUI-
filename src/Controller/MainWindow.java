@@ -26,7 +26,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -45,7 +47,6 @@ public class MainWindow implements Initializable {
     @FXML private ListView<String> list = null;
     @FXML private Button logout;
     @FXML private Menu unilinkMenu;
-    @FXML private MenuItem im_port;
     @FXML private MenuItem export;
     @FXML private MenuBar menuBar;
     @FXML private Menu data;
@@ -132,14 +133,14 @@ public class MainWindow implements Initializable {
             String description = i.getDescription();
             String status = i.getStatus();
             Double proposedPrice = i.getProposedPrice();
-            String image_name = i.getFileName();
-            populateJobListView(id, title, description, status, proposedPrice, image_name);
+            String imageName = i.getFileName();
+            populateJobListView(id, title, description, status, proposedPrice, imageName);
         }
     }
 
 
     //method to populate listview with job posts
-    private void populateJobListView(String id, String title, String description, String status, Double proposedPrice, String image_name) {
+    private void populateJobListView(String id, String title, String description, String status, Double proposedPrice, String imageName) {
         String post = jobToString(id, title, description, status, proposedPrice);
         ImageView imageView = new ImageView();
         postList.add(post);
@@ -164,15 +165,15 @@ public class MainWindow implements Initializable {
             String description = i.getDescription();
             String status = i.getStatus();
             Double askingPrice = i.getAskingPrice();
-            String image_name = i.getFileName();
-            populateSaleListView(id, title, description, status,askingPrice, image_name);
+            String imageName = i.getFileName();
+            populateSaleListView(id, title, description, status,askingPrice, imageName);
         }
 
     }
 
 
     //method to populate listview with sale posts
-    private void populateSaleListView(String id, String title, String description, String status, Double askingPrice, String image_name) {
+    private void populateSaleListView(String id, String title, String description, String status, Double askingPrice, String imageName) {
         String post = saleToString(id, title, description, status, askingPrice);
         postList.add(post);
         list.setItems(postList);
@@ -197,8 +198,8 @@ public class MainWindow implements Initializable {
             String status = i.getStatus();
             String venue = i.getVenue();
             String date = i.getDate();
-            String image_name = i.getFileName();
-            populateEventListView(id, title, description, status,venue,date, image_name);
+            String imageName = i.getFileName();
+            populateEventListView(id, title, description, status,venue,date, imageName);
         }
     }
 
@@ -213,7 +214,7 @@ public class MainWindow implements Initializable {
 
     //method to populate listview with event posts
     private void populateEventListView(String id, String title, String description, String status,
-                                  String venue, String date, String image_name) {
+                                  String venue, String date, String imageName) {
         ImageView imageView = new ImageView();
         String post = eventToString(id, title, description, status,venue,date);
         postList.add(post);
@@ -329,21 +330,23 @@ public class MainWindow implements Initializable {
             System.out.println(temp);
 
             if (temp.contains("EVE")) {
+                list.getItems().clear();
                 displayEventReply(temp);
-                list.getSelectionModel().clearSelection();
             } else if (temp.contains("SAL")) {
+//                list.getSelectionModel().clearSelection();
+                list.getItems().clear();
                 displaySaleReply(temp);
-                list.getSelectionModel().clearSelection();
             } else if (temp.contains("JOB")) {
+//                list.getSelectionModel().clearSelection();
+                list.getItems().clear();
                 displayJobReply(temp);
-                list.getSelectionModel().clearSelection();
             }
             else
             {
 //                mouseEvent.consume();
                 mouseEvent1.consume();
             }
-            list.getSelectionModel().clearSelection();
+//            list.getSelectionModel().clearSelection();
         });
     }
 
@@ -423,4 +426,64 @@ public class MainWindow implements Initializable {
     public String getUserName() {
         return this.userName;
     }
+
+    @FXML private void importFromFile(ActionEvent actionEvent) {
+    }
+
+
+    //method to export the post details to file
+    @FXML private void exportToFile() throws FileNotFoundException {
+        GetPost getPost = new GetPost();
+        getPost.selectDB();
+        PrintWriter printWriter = new PrintWriter("Posts.txt");
+
+        ArrayList<Event> eventPosts = getPost.getEventPost();
+        ArrayList<Sale> salePosts = getPost.getSalePost();
+        ArrayList<Job> jobPosts = getPost.getJobPost();
+
+        for ( Event i : eventPosts)
+        {
+            String id = i.getPostId();
+            String title = i.getTitle();
+            String description = i.getDescription();
+            String status = i.getStatus();
+            String venue = i.getVenue();
+            String date = i.getDate();
+            String imageName = i.getFileName();
+            printWriter.println(id + "," + title + "," + description + "," + status + ","
+                    + venue + "," + date + "," + imageName);
+        }
+
+        for ( Job i : jobPosts)
+        {
+            String id = i.getPostId();
+            String title = i.getTitle();
+            String description = i.getDescription();
+            String status = i.getStatus();
+            Double proposedPrice = i.getProposedPrice();
+            String imageName = i.getFileName();
+            printWriter.println(id + "," + title + "," + description + "," + status + ","
+                    + proposedPrice + "," + imageName);
+        }
+
+        for ( Sale i : salePosts)
+        {
+            String id = i.getPostId();
+            String title = i.getTitle();
+            String description = i.getDescription();
+            String status = i.getStatus();
+            Double askingPrice = i.getAskingPrice();
+            String imageName = i.getFileName();
+            printWriter.println(id + "," + title + "," + description + "," + status + ","
+                    + askingPrice + "," + imageName);
+        }
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Export Successful");
+        alert.setContentText("All the posts have been exported to Posts.txt file successfully");
+        alert.showAndWait();
+
+        printWriter.close();
+    }
+
 }
