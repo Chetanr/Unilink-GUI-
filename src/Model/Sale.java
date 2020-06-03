@@ -20,8 +20,8 @@ public class Sale extends Post {
         this.minimumRaise = minimumRaise;
     }
 
-    public Sale(String post_id, String title, String description, String status, double asking_price, String image_name) {
-        super(post_id, title, description, status, image_name);
+    public Sale(String creator_id, String post_id, String title, String description, String status, double asking_price, String image_name) {
+        super(post_id, title, description, status, creator_id, image_name);
         this.askingPrice = asking_price;
     }
 

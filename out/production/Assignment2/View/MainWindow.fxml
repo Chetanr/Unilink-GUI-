@@ -88,6 +88,7 @@
                </children>
             </HBox>
             <ListView fx:id="list" onMouseClicked="#reply" prefHeight="200.0" prefWidth="200.0" />
+            <Button fx:id="moreDetails" mnemonicParsing="false" onAction="#clear" text="More Details" />
          </children>
       </VBox>
    </center>

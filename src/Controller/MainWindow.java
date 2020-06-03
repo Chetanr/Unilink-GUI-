@@ -37,6 +37,7 @@ import Model.GetPost;
 import javafx.scene.image.ImageView;
 
 public class MainWindow implements Initializable {
+    @FXML private Button moreDetails;
     @FXML private ChoiceBox <String> postStatus;
     @FXML private ChoiceBox <String> postCreator;
     @FXML private ChoiceBox <String> postType;
@@ -133,15 +134,16 @@ public class MainWindow implements Initializable {
             String description = i.getDescription();
             String status = i.getStatus();
             Double proposedPrice = i.getProposedPrice();
+            String creatorid = i.getCreatorId();
             String imageName = i.getFileName();
-            populateJobListView(id, title, description, status, proposedPrice, imageName);
+            populateJobListView(id, title, description, status, proposedPrice, creatorid, imageName);
         }
     }
 
 
     //method to populate listview with job posts
-    private void populateJobListView(String id, String title, String description, String status, Double proposedPrice, String imageName) {
-        String post = jobToString(id, title, description, status, proposedPrice);
+    private void populateJobListView(String id, String title, String description, String status, Double proposedPrice, String creatorId, String imageName) {
+        String post = jobToString(id, title, description, status, creatorId, proposedPrice);
         ImageView imageView = new ImageView();
         postList.add(post);
         list.setItems(postList);
@@ -149,10 +151,10 @@ public class MainWindow implements Initializable {
 
 
     //convert the variables to String to display Job Post
-    private String jobToString(String id, String title, String description, String status, Double proposedPrice)
+    private String jobToString(String id, String title, String description, String status, String creatorId, Double proposedPrice)
     {
         return "Post Id : " + id + "\nTitle : " + title + "\nDescription : " + description + "\nStatus : "
-                + status + "\nProposed Price : " + proposedPrice;
+                + status + "\nProposed Price : " + proposedPrice + "\nCreator ID : " + creatorId;
     }
 
 
@@ -165,26 +167,27 @@ public class MainWindow implements Initializable {
             String description = i.getDescription();
             String status = i.getStatus();
             Double askingPrice = i.getAskingPrice();
+            String creatorId = i.getCreatorId();
             String imageName = i.getFileName();
-            populateSaleListView(id, title, description, status,askingPrice, imageName);
+            populateSaleListView(id, title, description, status,askingPrice, creatorId, imageName);
         }
 
     }
 
 
     //method to populate listview with sale posts
-    private void populateSaleListView(String id, String title, String description, String status, Double askingPrice, String imageName) {
-        String post = saleToString(id, title, description, status, askingPrice);
+    private void populateSaleListView(String id, String title, String description, String status, Double askingPrice, String creatorId, String imageName) {
+        String post = saleToString(id, title, description, status, creatorId, askingPrice);
         postList.add(post);
         list.setItems(postList);
     }
 
 
     //convert the variables to String to display Sale Post
-    private String saleToString(String id, String title, String description, String status, Double askingPrice)
+    private String saleToString(String id, String title, String description, String status, String creatorId, Double askingPrice)
     {
         return "Post Id : " + id + "\nTitle : " + title + "\nDescription : " + description + "\nStatus : "
-                + status + "\nAsking Price : " + askingPrice;
+                + status + "\nAsking Price : " + askingPrice + "\nCreator Id : " + creatorId;
     }
 
 
@@ -198,25 +201,26 @@ public class MainWindow implements Initializable {
             String status = i.getStatus();
             String venue = i.getVenue();
             String date = i.getDate();
+            String creatorId = i.getCreatorId();
             String imageName = i.getFileName();
-            populateEventListView(id, title, description, status,venue,date, imageName);
+            populateEventListView(id, title, description, status,venue,date, creatorId, imageName);
         }
     }
 
 
     //convert the variables to String to display Event Post
-    private String eventToString(String id, String title, String description, String status, String venue, String date)
+    private String eventToString(String id, String title, String description, String status, String venue, String creatorId, String date)
     {
         return "Post Id: " + id + "\nTitle : " + title + "\nDescription : " + description + "\nStatus : " + status
-                + "\nVenue: " + venue + "\nDate : " + date;
+                + "\nVenue: " + venue + "\nDate : " + date + "\nCreator ID : " + creatorId;
     }
 
 
     //method to populate listview with event posts
     private void populateEventListView(String id, String title, String description, String status,
-                                  String venue, String date, String imageName) {
+                                       String venue, String date,String creatorId, String imageName) {
         ImageView imageView = new ImageView();
-        String post = eventToString(id, title, description, status,venue,date);
+        String post = eventToString(id, title, description, status, venue, creatorId, date);
         postList.add(post);
         list.setItems(postList);
     }
@@ -226,17 +230,19 @@ public class MainWindow implements Initializable {
     @FXML
     private void eventPost(ActionEvent actionEvent) {
         eventPost.setOnMouseClicked((event) -> {
-            FXMLLoader loader = new FXMLLoader();
             try {
-                loader.setLocation(getClass().getResource("/view/EventPost.fxml"));
-                Scene scene = new Scene(loader.load());
-                Stage stage = new Stage();
-                stage.setTitle("Create Event Post");
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/EventPost.fxml"));
+                loader.load();
+                EventPost login = loader.getController();
+                login.setUserId(getUserName());
+                loader = new FXMLLoader(getClass().getResource("/view/EventPost.fxml"));
+                Parent parent = loader.load();
+
+                Scene scene = new Scene(parent);
+                Stage stage = (Stage)((Node)(event).getSource()).getScene().getWindow();
                 stage.setScene(scene);
-                stage.initModality(Modality.APPLICATION_MODAL);
                 stage.showAndWait();
             } catch (IOException e) {
-                System.out.println("Could not open EventPost.fxml");
                 e.printStackTrace();
             }
         });
@@ -247,17 +253,19 @@ public class MainWindow implements Initializable {
     @FXML
     private void salePost(ActionEvent actionEvent) {
         salePost.setOnMouseClicked((event) -> {
-            FXMLLoader loader = new FXMLLoader();
             try {
-                loader.setLocation(getClass().getResource("/View/SalePost.fxml"));
-                Scene scene = new Scene(loader.load());
-                Stage stage = new Stage();
-                stage.setTitle("Create Event Post");
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/SalePost.fxml"));
+                loader.load();
+                SalePost salePost = loader.getController();
+                salePost.setUserId(getUserName());
+                loader = new FXMLLoader(getClass().getResource("/view/SalePost.fxml"));
+                Parent parent = loader.load();
+
+                Scene scene = new Scene(parent);
+                Stage stage = (Stage)((Node)(event).getSource()).getScene().getWindow();
                 stage.setScene(scene);
-                stage.initModality(Modality.APPLICATION_MODAL);
                 stage.showAndWait();
             } catch (IOException e) {
-                System.out.println("Could not open SalePost.fxml");
                 e.printStackTrace();
             }
         });
@@ -267,17 +275,19 @@ public class MainWindow implements Initializable {
     //method for creating a new job post
     @FXML private void jobPost(ActionEvent actionEvent) {
         jobPost.setOnMouseClicked((event) -> {
-            FXMLLoader loader = new FXMLLoader();
             try {
-                loader.setLocation(getClass().getResource("/View/jobPost.fxml"));
-                Scene scene = new Scene(loader.load());
-                Stage stage = new Stage();
-                stage.setTitle("Create Event Post");
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/JobPost.fxml"));
+                loader.load();
+                JobPost jobPostPost = loader.getController();
+                jobPostPost.setUserId(getUserName());
+                loader = new FXMLLoader(getClass().getResource("/view/JobPost.fxml"));
+                Parent parent = loader.load();
+
+                Scene scene = new Scene(parent);
+                Stage stage = (Stage)((Node)(event).getSource()).getScene().getWindow();
                 stage.setScene(scene);
-                stage.initModality(Modality.APPLICATION_MODAL);
                 stage.showAndWait();
             } catch (IOException e) {
-                System.out.println("Could not open JobPost.fxml");
                 e.printStackTrace();
             }
         });
@@ -324,30 +334,28 @@ public class MainWindow implements Initializable {
         });
     }
 
-    @FXML private void reply() {
-        list.setOnMouseClicked(mouseEvent1 -> {
-            String temp = list.getSelectionModel().getSelectedItem();
-            System.out.println(temp);
+     @FXML private void reply(MouseEvent event) {
 
-            if (temp.contains("EVE")) {
-                list.getItems().clear();
-                displayEventReply(temp);
-            } else if (temp.contains("SAL")) {
-//                list.getSelectionModel().clearSelection();
-                list.getItems().clear();
-                displaySaleReply(temp);
-            } else if (temp.contains("JOB")) {
-//                list.getSelectionModel().clearSelection();
-                list.getItems().clear();
-                displayJobReply(temp);
-            }
-            else
-            {
-//                mouseEvent.consume();
-                mouseEvent1.consume();
-            }
-//            list.getSelectionModel().clearSelection();
-        });
+        String temp = list.getSelectionModel().getSelectedItem();
+        System.out.println(temp);
+
+             if (temp.contains("EVE")) {
+                 list.getSelectionModel().clearSelection();
+                 displayEventReply(temp);
+//                 list.getSelectionModel().clearSelection();
+             } else if (temp.contains("SAL")) {
+                 list.getSelectionModel().clearSelection();
+//               list.getItems().clear();
+                 displaySaleReply(temp);
+//                 list.getSelectionModel().clearSelection();
+             } else if (temp.contains("JOB")) {
+                 list.getSelectionModel().clearSelection();
+//               list.getItems().clear();
+                 displayJobReply(temp);
+             }
+             else {
+//               mouseEvent.consume();
+             }
     }
 
 
@@ -397,22 +405,22 @@ public class MainWindow implements Initializable {
 
     //to display ReplyEventPost.fxml window so that one can reply to event posts
     private void displayEventReply(String temp) {
-        list.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                FXMLLoader loader = new FXMLLoader();
-                try {
-//                    ((Node) (mouseEvent.getSource())).getScene().getWindow().hide();
-                    loader.setLocation(getClass().getResource("/View/ReplyEventPost.fxml"));
-                    Scene scene = new Scene(loader.load());
-                    Stage stage = new Stage();
-                    stage.setScene(scene);
-                    stage.initModality(Modality.APPLICATION_MODAL);
-                    stage.show();
-                } catch (IOException e) {
-                    System.out.println("Could not open ReplyEventPost.fxml");
-                    e.printStackTrace();
-                }
+        list.setOnMouseClicked((event) -> {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/ReplyEventPost.fxml"));
+                loader.load();
+                ReplyEventPost reply = loader.getController();
+                reply.setPost(temp);
+                ((Node)(event.getSource())).getScene().getWindow().hide();
+                loader = new FXMLLoader(getClass().getResource("/view/ReplyEventPost.fxml"));
+                Parent parent = loader.load();
+
+                Scene scene = new Scene(parent);
+                Stage stage = (Stage)((Node)(event).getSource()).getScene().getWindow();
+                stage.setScene(scene);
+                stage.show();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         });
     }
@@ -486,4 +494,9 @@ public class MainWindow implements Initializable {
         printWriter.close();
     }
 
+    @FXML private void clear(ActionEvent actionEvent) {
+        moreDetails.setOnMouseClicked((event) ->{
+            list.getSelectionModel().clearSelection();
+                });
+    }
 }

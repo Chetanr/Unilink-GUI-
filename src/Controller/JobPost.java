@@ -10,7 +10,9 @@ import Model.GenerateId;
 import Model.Job;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -18,8 +20,11 @@ import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
@@ -41,6 +46,8 @@ public class JobPost extends Post{
     private String fileName = "No Preview";
     private FileChooser fileChooser = new FileChooser();
     private File file;
+
+    private static  String userId;
 
 
     //method for back to main window button
@@ -98,10 +105,23 @@ public class JobPost extends Post{
             if(checkPrice(proposedPrice.getText()))
             {
                 GenerateId id = new GenerateId();
-                Login login = new Login();
-                Job job = new Job (id.getJobId(), title.getText(), description.getText(), Double.parseDouble(proposedPrice.getText()), "OPEN", login.getUser(), fileName);
+                Job job = new Job (id.getJobId(), title.getText(), description.getText(), Double.parseDouble(proposedPrice.getText()), "OPEN", getUserId(), fileName);
                 job.insertDB();
                 saveImage();
+                FXMLLoader loader = new FXMLLoader();
+                try {
+                    loader.setLocation(getClass().getResource("/View/MainWindow.fxml"));
+                    Scene scene = new Scene(loader.load());
+                    Stage stage = new Stage();
+                    stage.setTitle("Create Event Post");
+                    stage.setScene(scene);
+                    stage.initModality(Modality.APPLICATION_MODAL);
+                    stage.show();
+                } catch (IOException e) {
+                    System.out.println("Could not open MainWindow.fxml");
+                    e.printStackTrace();
+                }
+
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Successfully created post");
                 alert.setContentText("The Post has been created successfully");
@@ -141,5 +161,13 @@ public class JobPost extends Post{
         {
             return false;
         }
+    }
+
+    public static String getUserId() {
+        return userId;
+    }
+
+    public static void setUserId(String userId) {
+        JobPost.userId = userId;
     }
 }

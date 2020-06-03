@@ -9,13 +9,18 @@ import Model.GenerateId;
 import Model.Sale;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
@@ -38,6 +43,8 @@ public class SalePost extends Post{
     @FXML private TextArea description;
     @FXML private TextArea title;
     @FXML private Button back;
+
+    private static String userId;
 
     private String fileName = "No Preview";
     FileChooser fileChooser = new FileChooser();
@@ -97,10 +104,23 @@ public class SalePost extends Post{
                 if (checkPrice(minimumRaise.getText()))
                 {
                     GenerateId id = new GenerateId();
-                    Login login = new Login();
-                    Sale sale = new Sale (id.getSaleId(), title.getText(), description.getText(), Double.parseDouble(askingPrice.getText()), Double.parseDouble(minimumRaise.getText()),  "OPEN", login.getUser(), fileName );
+                    Sale sale = new Sale (id.getSaleId(), title.getText(), description.getText(), Double.parseDouble(askingPrice.getText()), Double.parseDouble(minimumRaise.getText()),  "OPEN", getUserId(), fileName );
                     sale.insertDB();
                     saveImage();
+                    FXMLLoader loader = new FXMLLoader();
+                    try {
+                        loader.setLocation(getClass().getResource("/View/MainWindow.fxml"));
+                        Scene scene = new Scene(loader.load());
+                        Stage stage = new Stage();
+                        stage.setTitle("Create Event Post");
+                        stage.setScene(scene);
+                        stage.initModality(Modality.APPLICATION_MODAL);
+                        stage.show();
+                    } catch (IOException e) {
+                        System.out.println("Could not open MainWindow.fxml");
+                        e.printStackTrace();
+                    }
+
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("Successfully created post");
                     alert.setContentText("The Post has been created successfully");
@@ -144,5 +164,13 @@ public class SalePost extends Post{
         {
             return false;
         }
+    }
+
+    public String getUserId() {
+        return this.userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 }

@@ -23,8 +23,8 @@ public class Event extends Post{
         this.capacity = capacity;
     }
 
-    public Event(String post_id, String title, String description, String status, String venue, String date, String image_name) {
-        super(post_id, title, description, status, image_name);
+    public Event(String creator_id, String post_id, String title, String description, String status, String venue, String date, String image_name) {
+        super(post_id, title, description, status,creator_id, image_name);
         this.venue = venue;
         this.date = date;
     }

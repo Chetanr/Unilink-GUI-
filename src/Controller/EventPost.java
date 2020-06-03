@@ -10,11 +10,16 @@ import Model.GenerateId;
 import javafx.event.ActionEvent;
 import javafx.fxml.*;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+
 import java.io.File;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
@@ -33,6 +38,8 @@ public class EventPost extends Post{
     @FXML private Button closePost;
     @FXML private Button deletePost;
     @FXML private Button savePost;
+
+    private static String userId;
 
 
     private String fileName = "No Preview";
@@ -84,9 +91,24 @@ public class EventPost extends Post{
             {
                 GenerateId id = new GenerateId();
                 Login login = new Login();
-                Event ev = new Event (id.getId(), title.getText(), description.getText(), venue.getText(), date.getValue().toString(), Integer.parseInt(capacity.getText()), "OPEN", login.getUser(), fileName );
+                Event ev = new Event (id.getId(), title.getText(), description.getText(), venue.getText(), date.getValue().toString(), Integer.parseInt(capacity.getText()), "OPEN", getUserId(), fileName );
                 ev.insertDB();
                 saveImage();
+
+                FXMLLoader loader = new FXMLLoader();
+                try {
+                    loader.setLocation(getClass().getResource("/View/MainWindow.fxml"));
+                    Scene scene = new Scene(loader.load());
+                    Stage stage = new Stage();
+                    stage.setTitle("Create Event Post");
+                    stage.setScene(scene);
+                    stage.initModality(Modality.APPLICATION_MODAL);
+                    stage.show();
+                } catch (IOException e) {
+                    System.out.println("Could not open MainWindow.fxml");
+                    e.printStackTrace();
+                }
+
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Successfully created post");
                 alert.setContentText("The Post has been created successfully");
@@ -122,7 +144,19 @@ public class EventPost extends Post{
     @FXML
     protected void back(ActionEvent actionEvent) {
         back.setOnMouseClicked((event) -> {
-            ((Node)(event.getSource())).getScene().getWindow().hide();
+            FXMLLoader loader = new FXMLLoader();
+            try {
+                loader.setLocation(getClass().getResource("/View/MainWindow.fxml"));
+                Scene scene = new Scene(loader.load());
+                Stage stage = new Stage();
+                stage.setTitle("Create Event Post");
+                stage.setScene(scene);
+                stage.initModality(Modality.APPLICATION_MODAL);
+                stage.showAndWait();
+            } catch (IOException e) {
+                System.out.println("Could not open SalePost.fxml");
+                e.printStackTrace();
+            }
         });
     }
 
@@ -137,5 +171,14 @@ public class EventPost extends Post{
         {
             return false;
         }
+    }
+
+
+    public String getUserId() {
+        return this.userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 }

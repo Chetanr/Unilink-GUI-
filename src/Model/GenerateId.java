@@ -73,7 +73,7 @@ public class GenerateId {
 
         if (pid == null)
         {
-            return "EVE0";
+            return "SAL0";
         }
         return pid;
     }
@@ -105,7 +105,7 @@ public class GenerateId {
 
         if (pid == null)
         {
-            return "EVE0";
+            return "JOB0";
         }
         return pid;
     }

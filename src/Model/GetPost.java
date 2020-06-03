@@ -29,11 +29,11 @@ public class GetPost {
         ) {
             String query = null;
 
-            query = "SELECT post_id, title, description, status, venue, date, image_name FROM " + TABLE_NAME;
+            query = "SELECT creator_id, post_id, title, description, status, venue, date, image_name FROM " + TABLE_NAME;
 
             try (ResultSet resultSet = stmt.executeQuery(query)) {
                 while(resultSet.next()) {
-                    Event event =  new Event(resultSet.getString("post_id"), resultSet.getString("title"), resultSet.getString("description"), resultSet.getString("status"),
+                    Event event =  new Event(resultSet.getString("creator_id"), resultSet.getString("post_id"), resultSet.getString("title"), resultSet.getString("description"), resultSet.getString("status"),
                             resultSet.getString("venue"), resultSet.getString("date"),resultSet.getString("image_name"));
                     eventPost.add(event);
                 }
@@ -41,10 +41,10 @@ public class GetPost {
                 System.out.println(e.getMessage());
             }
 
-            query = "SELECT post_id, title, description, status, proposed_offer, image_name FROM " + TABLE_NAME3;
+            query = "SELECT creator_id, post_id, title, description, status, proposed_offer, image_name FROM " + TABLE_NAME3;
             try (ResultSet resultSet = stmt.executeQuery(query)) {
                 while(resultSet.next()) {
-                    Job job = new Job(resultSet.getString("post_id"), resultSet.getString("title"), resultSet.getString("description"), resultSet.getString("status"),
+                    Job job = new Job(resultSet.getString("creator_id"), resultSet.getString("post_id"), resultSet.getString("title"), resultSet.getString("description"), resultSet.getString("status"),
                             resultSet.getDouble("proposed_offer"), resultSet.getString("image_name"));
                     jobPost.add(job);
                 }
@@ -52,10 +52,10 @@ public class GetPost {
                 System.out.println(e.getMessage());
             }
 
-            query = "SELECT post_id, title, description, status, asking_price, image_name FROM " + TABLE_NAME2;
+            query = "SELECT creator_id, post_id, title, description, status, asking_price, image_name FROM " + TABLE_NAME2;
             try (ResultSet resultSet = stmt.executeQuery(query)) {
                 while(resultSet.next()) {
-                    Sale sale = new Sale(resultSet.getString("post_id"), resultSet.getString("title"), resultSet.getString("description"), resultSet.getString("status"),
+                    Sale sale = new Sale(resultSet.getString("creator_id"), resultSet.getString("post_id"), resultSet.getString("title"), resultSet.getString("description"), resultSet.getString("status"),
                             resultSet.getDouble("asking_price"), resultSet.getString("image_name"));
                     salePost.add(sale);
                 }
