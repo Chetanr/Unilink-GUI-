@@ -1,8 +1,9 @@
 package Model;
 
-import hsql_db.ConnectionTest;
+import Database.ConnectionTest;
 
 import java.sql.Connection;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.sql.Statement;
 
 public class Event extends Post{
@@ -13,6 +14,7 @@ public class Event extends Post{
     private int attendee_count;
     private final String DB_NAME = "Unilink";
     private final String TABLE_NAME = "EVENTPOST";
+    private final String REPLY_TABLE = "REPLY";
 
 
 
@@ -63,9 +65,30 @@ public class Event extends Post{
         }
     }
 
+    @Override
+    public void insertReplies(String user) throws duplicateReplyException {
+        try (Connection con = ConnectionTest.getConnection(DB_NAME);
+             Statement stmt = con.createStatement();
+        ) {
+            generateId();
+            String query = "INSERT INTO " + REPLY_TABLE +
+                    " (creator_id, post_id, attendee_id, attendee_count) VALUES ( " + "'" + getCreatorId() + "'" + " ," + "'" + getPostId() + "'" + " ," +"'"
+                    + user + "'" + " ," +  "'" + getAttendeeCount() + "'" + " )";
 
+            int result = stmt.executeUpdate(query);
 
+            con.commit();
 
+            System.out.println("Insert into table " + TABLE_NAME + " executed successfully");
+            System.out.println(result + " row(s) affected");
+
+        } catch (Exception e) {
+            if(e instanceof SQLIntegrityConstraintViolationException)
+            {
+                throw new duplicateReplyException();
+            }
+        }
+    }
 
     @Override
     public void generateId()
@@ -80,16 +103,24 @@ public class Event extends Post{
         return venue;
     }
 
+
     public String getDate() {
         return date;
     }
+
 
     public int getCapacity() {
         return capacity;
     }
 
-    public int getAttendee_count() {
+
+    public int getAttendeeCount() {
         return attendee_count;
+    }
+
+
+    public void setAttendeeCount(int attendee_count) {
+        this.attendee_count = this.attendee_count + attendee_count;
     }
 
 }

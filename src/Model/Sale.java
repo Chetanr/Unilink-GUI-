@@ -1,8 +1,9 @@
 package Model;
 
-import hsql_db.ConnectionTest;
+import Database.ConnectionTest;
 
 import java.sql.Connection;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.sql.Statement;
 
 public class Sale extends Post {
@@ -12,6 +13,7 @@ public class Sale extends Post {
     private double minimumRaise;
     private final String DB_NAME = "Unilink";
     private final String TABLE_NAME = "SALEPOST";
+    private final String REPLY_TABLE = "REPLY";
 
 
     public Sale(String id, String title, String description, double askingPrice, double minimumRaise, String status, String creatorId, String fileName) {
@@ -60,6 +62,33 @@ public class Sale extends Post {
     }
 
     @Override
+    public void insertReplies(String user) throws duplicateReplyException {
+        try (Connection con = ConnectionTest.getConnection(DB_NAME);
+             Statement stmt = con.createStatement();
+        ) {
+            generateId();
+            String query = "INSERT INTO " + REPLY_TABLE +
+                    " (creator_id, post_id, sale_offer) VALUES ( " + "'" + getCreatorId() + "'" + " ," + "'" + getPostId() + "'" + " ," +"'" + getHighestOffer() + "'" + " )";
+
+            int result = stmt.executeUpdate(query);
+
+            con.commit();
+
+            System.out.println("Insert into table " + TABLE_NAME + " executed successfully");
+            System.out.println(result + " row(s) affected");
+
+        } catch (Exception e) {
+            if(e instanceof SQLIntegrityConstraintViolationException)
+            {
+                throw new duplicateReplyException();
+            }
+        }
+
+    }
+
+
+
+    @Override
     public void generateId()
     {
         String temp = getPostId();
@@ -78,5 +107,15 @@ public class Sale extends Post {
 
     public double getMinimumRaise() {
         return minimumRaise;
+    }
+
+
+    public double getHighestOffer() {
+        return highestOffer;
+    }
+
+
+    public void setHighestOffer(double highestOffer) {
+        this.highestOffer = highestOffer;
     }
 }

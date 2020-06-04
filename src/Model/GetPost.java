@@ -5,7 +5,7 @@ ReplyPost Table.
  */
 package Model;
 
-import hsql_db.ConnectionTest;
+import Database.ConnectionTest;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -18,9 +18,14 @@ public class GetPost {
     private final String TABLE_NAME = "EVENTPOST";
     private final String TABLE_NAME2 = "SALEPOST";
     private final String TABLE_NAME3 = "JOBPOST";
+    private final String TABLE_NAME4 = "REPLY";
+
+
     private ArrayList<Event> eventPost = new ArrayList<Event>();
     private ArrayList<Sale> salePost = new ArrayList<Sale>();
     private ArrayList<Job> jobPost = new ArrayList<Job>();
+    private ArrayList<Reply> reply = new ArrayList<Reply>();
+
 
     //get the post details from the database
     public void selectDB() {
@@ -63,6 +68,17 @@ public class GetPost {
                 System.out.println(e.getMessage());
             }
 
+            query = "SELECT creator_id, post_id, job_offer, sale_offer, attendee_id, attendee_count FROM " + TABLE_NAME4;
+            try (ResultSet resultSet = stmt.executeQuery(query)) {
+                while(resultSet.next()) {
+                    Reply reply1= new Reply(resultSet.getString("creator_id"), resultSet.getString("post_id"), resultSet.getDouble("job_offer"), resultSet.getDouble("sale_offer"),
+                            resultSet.getInt("attendee_id"), resultSet.getInt("attendee_count"));
+                    reply.add(reply1);
+                }
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -73,14 +89,18 @@ public class GetPost {
         return eventPost;
     }
 
+
     public ArrayList<Sale> getSalePost() {
         return salePost;
     }
+
 
     public ArrayList<Job> getJobPost() {
         return jobPost;
     }
 
 
-
+    public ArrayList<Reply> getReply() {
+        return reply;
+    }
 }

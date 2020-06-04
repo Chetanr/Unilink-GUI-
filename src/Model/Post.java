@@ -4,19 +4,19 @@ public abstract class Post {
     private String postId;
     private String title;
     private String description;
-    private String creator_id;
+    private String creatorId;
     private String status;
     private String replies;
     private String fileName;
 
     //constructor to create a new post
-    public Post (String postId, String title, String description, String status, String creator_id, String fileName)
+    public Post (String postId, String title, String description, String status, String creatorId, String fileName)
     {
         this.postId = postId;
         this.title = title;
         this.description = description;
         this.status = status;
-        this.creator_id = creator_id;
+        this.creatorId = creatorId;
         this.fileName = fileName;
     }
 
@@ -71,14 +71,14 @@ public abstract class Post {
     //accessor for creator_id
     public String getCreatorId()
     {
-        return this.creator_id;
+        return this.creatorId;
     }
 
 
     //mutator for creator_id
-    public void setCreator_id (String creator_id)
+    public void setCreatorId(String creatorId)
     {
-        this.creator_id = creator_id;
+        this.creatorId = creatorId;
     }
 
 
@@ -116,8 +116,13 @@ public abstract class Post {
         return this.postId;
     }
 
+
+    //abstract method to record the replies to the post
+    public abstract void insertReplies(String user) throws duplicateReplyException;
+
+
+    //method for generating the post id
     abstract public void generateId();
-//    abstract public void selectDB();
 
     //mutator for id
     public void setPostId(String postId)

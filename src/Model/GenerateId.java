@@ -1,6 +1,6 @@
 package Model;
 
-import hsql_db.ConnectionTest;
+import Database.ConnectionTest;
 
 import java.sql.Connection;
 import java.sql.ResultSet;

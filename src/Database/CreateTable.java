@@ -1,4 +1,4 @@
-package hsql_db;
+package Database;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -102,6 +102,8 @@ public class CreateTable {
 					+ "post_id VARCHAR(8) NOT NULL,"
 					+ "job_offer DECIMAL(6,2),"
 					+ "sale_offer DECIMAL(6,2),"
+					+ "attendee_id VARCHAR(10),"
+					+ "attendee_count int,"
 					+ "PRIMARY KEY (post_id))");
 			if(result == 0) {
 				System.out.println("Table " + REPLY_TABLE + " has been created successfully");

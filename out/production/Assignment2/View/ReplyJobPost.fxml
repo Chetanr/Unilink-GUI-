@@ -9,34 +9,19 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ReplyJobPost">
    <children>
-      <Label layoutX="249.0" layoutY="93.0" text="Title : ">
+      <Label fx:id="title" layoutX="314.0" layoutY="94.0" text="title">
          <font>
-            <Font name="System Bold" size="14.0" />
+            <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <Label layoutX="230.0" layoutY="128.0" text="Description :">
+      <Label fx:id="description" layoutX="310.0" layoutY="128.0" text="desc">
          <font>
-            <Font name="System Bold" size="14.0" />
+            <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <Label layoutX="220.0" layoutY="169.0" text="Proposed Offer:">
+      <Label fx:id="proposedOffer" layoutX="311.0" layoutY="161.0" text="offer">
          <font>
-            <Font name="System Bold" size="14.0" />
-         </font>
-      </Label>
-      <Label fx:id="title" layoutX="314.0" layoutY="93.0">
-         <font>
-            <Font name="System Bold" size="14.0" />
-         </font>
-      </Label>
-      <Label fx:id="description" layoutX="314.0" layoutY="128.0">
-         <font>
-            <Font name="System Bold" size="14.0" />
-         </font>
-      </Label>
-      <Label fx:id="proposedOffer" layoutX="322.0" layoutY="169.0">
-         <font>
-            <Font name="System Bold" size="14.0" />
+            <Font name="System Bold" size="18.0" />
          </font>
       </Label>
       <ImageView fx:id="imageView" fitHeight="150.0" fitWidth="200.0" layoutX="14.0" layoutY="62.0" pickOnBounds="true" preserveRatio="true" />

@@ -1,8 +1,9 @@
 package Model;
 
-import hsql_db.ConnectionTest;
+import Database.ConnectionTest;
 
 import java.sql.Connection;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.sql.Statement;
 
 public class Job extends Post{
@@ -14,10 +15,12 @@ public class Job extends Post{
 
     private final String DB_NAME = "Unilink";
     private final String TABLE_NAME = "JOBPOST";
+    private final String REPLY_TABLE = "REPLY";
 
     public Job(String id, String title, String description, double proposedPrice, String status, String creator_id, String fileName) {
         super(id, title, description, status, creator_id, fileName);
         this.proposed_price = proposedPrice;
+        this.lowest_offer = proposedPrice;
     }
 
     public Job(String creatorId, String post_id, String title, String description, String status, double proposed_offer, String image_name) {
@@ -62,6 +65,30 @@ public class Job extends Post{
     }
 
     @Override
+    public void insertReplies(String user) throws duplicateReplyException {
+        try (Connection con = ConnectionTest.getConnection(DB_NAME);
+             Statement stmt = con.createStatement();
+        ) {
+            generateId();
+            String query = "INSERT INTO " + REPLY_TABLE +
+                    " (creator_id, post_id, job_offer) VALUES ( " + "'" + getCreatorId() + "'" + " ," + "'" + getPostId() + "'" + " ," +"'" + getLowestOffer() + "'" + " )";
+
+            int result = stmt.executeUpdate(query);
+
+            con.commit();
+
+            System.out.println("Insert into table " + TABLE_NAME + " executed successfully");
+            System.out.println(result + " row(s) affected");
+
+        } catch (Exception e) {
+            if(e instanceof SQLIntegrityConstraintViolationException)
+            {
+                throw new duplicateReplyException();
+            }
+        }
+    }
+
+    @Override
     public void generateId()
     {
         String temp = getPostId();
@@ -72,6 +99,15 @@ public class Job extends Post{
 
     public double getProposedPrice() {
         return proposed_price;
+    }
+
+
+    public double getLowestOffer() {
+        return lowest_offer;
+    }
+
+    public void setLowestOffer(double lowest_offer) {
+        this.lowest_offer = lowest_offer;
     }
 
 

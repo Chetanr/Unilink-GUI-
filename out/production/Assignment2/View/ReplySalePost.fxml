@@ -9,24 +9,9 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ReplySalePost">
    <children>
-      <Label layoutX="279.0" layoutY="82.0" text="Title : ">
+      <Label fx:id="description" layoutX="329.0" layoutY="117.0" text="abc">
          <font>
-            <Font name="System Bold" size="14.0" />
-         </font>
-      </Label>
-      <Label layoutX="260.0" layoutY="117.0" text="Description :">
-         <font>
-            <Font name="System Bold" size="14.0" />
-         </font>
-      </Label>
-      <Label layoutX="250.0" layoutY="158.0" text="Asking Price:">
-         <font>
-            <Font name="System Bold" size="14.0" />
-         </font>
-      </Label>
-      <Label fx:id="description" layoutX="345.0" layoutY="117.0" prefHeight="18.0" prefWidth="35.0">
-         <font>
-            <Font name="System Bold" size="14.0" />
+            <Font name="System Bold" size="18.0" />
          </font>
       </Label>
       <ImageView fx:id="imageView" fitHeight="150.0" fitWidth="200.0" layoutX="24.0" layoutY="72.0" pickOnBounds="true" preserveRatio="true" />
@@ -38,14 +23,14 @@
       </Label>
       <Button fx:id="makeOffer" layoutX="253.0" layoutY="292.0" mnemonicParsing="false" onAction="#makeOffer" text="Make Offer" />
       <Button fx:id="cancel" layoutX="476.0" layoutY="292.0" mnemonicParsing="false" onAction="#cancel" text="Cancel" />
-      <Label fx:id="title" layoutX="328.0" layoutY="82.0" prefHeight="18.0" prefWidth="35.0">
+      <Label fx:id="title" layoutX="329.0" layoutY="83.0" text="abc">
          <font>
-            <Font name="System Bold" size="14.0" />
+            <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <Label fx:id="askingPrice" layoutX="345.0" layoutY="158.0" prefHeight="18.0" prefWidth="35.0">
+      <Label fx:id="askingPrice" layoutX="329.0" layoutY="158.0" text="abc">
          <font>
-            <Font name="System Bold" size="14.0" />
+            <Font name="System Bold" size="18.0" />
          </font>
       </Label>
    </children>

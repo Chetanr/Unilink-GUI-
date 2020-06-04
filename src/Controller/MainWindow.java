@@ -22,7 +22,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.fxml.FXML;
 import javafx.event.*;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -37,7 +36,6 @@ import Model.GetPost;
 import javafx.scene.image.ImageView;
 
 public class MainWindow implements Initializable {
-    @FXML private Button moreDetails;
     @FXML private ChoiceBox <String> postStatus;
     @FXML private ChoiceBox <String> postCreator;
     @FXML private ChoiceBox <String> postType;
@@ -47,10 +45,7 @@ public class MainWindow implements Initializable {
     @FXML private Label welcomeLabel;
     @FXML private ListView<String> list = null;
     @FXML private Button logout;
-    @FXML private Menu unilinkMenu;
     @FXML private MenuItem export;
-    @FXML private MenuBar menuBar;
-    @FXML private Menu data;
 
     private static String userName;
 
@@ -67,6 +62,7 @@ public class MainWindow implements Initializable {
         checkPostFilters(getPost);
 
         welcomeLabel.setText("Welcome " + getUserName() + ".!");
+        reply();
 
     }
 
@@ -334,48 +330,132 @@ public class MainWindow implements Initializable {
         });
     }
 
-     @FXML private void reply(MouseEvent event) {
+     @FXML private void reply() {
+        list.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
+                if (t1.contains("EVE")) {
+                    list.getSelectionModel().clearSelection();
+                    if (t1.contains(userName))
+                    {
+                        displayOwnerEvent(t1);
+                    }
+                    else
+                    {
+                        displayEventReply(t1);
+                    }
+                } else if (t1.contains("SAL")) {
+                    list.getSelectionModel().clearSelection();
+                    if (t1.contains(userName))
+                    {
+                        displayOwnerSale(t1);
+                    }
+                    else
+                    {
+                        displaySaleReply(t1);
+                    }
 
-        String temp = list.getSelectionModel().getSelectedItem();
-        System.out.println(temp);
+                } else if (t1.contains("JOB")) {
+                    list.getSelectionModel().clearSelection();
+                    if (t1.contains(userName))
+                    {
+                        displayOwnerJob(t1);
+                    }
+                    else
+                    {
+                        displayJobReply(t1);
+                    }
+                }
+            }
+        });
+    }
 
-             if (temp.contains("EVE")) {
-                 list.getSelectionModel().clearSelection();
-                 displayEventReply(temp);
-//                 list.getSelectionModel().clearSelection();
-             } else if (temp.contains("SAL")) {
-                 list.getSelectionModel().clearSelection();
-//               list.getItems().clear();
-                 displaySaleReply(temp);
-//                 list.getSelectionModel().clearSelection();
-             } else if (temp.contains("JOB")) {
-                 list.getSelectionModel().clearSelection();
-//               list.getItems().clear();
-                 displayJobReply(temp);
-             }
-             else {
-//               mouseEvent.consume();
-             }
+    private void displayOwnerJob(String t1) {
+        list.setOnMouseClicked((event) -> {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/DisplayOwnerJob.fxml"));
+                loader.load();
+                DisplayOwnerJob reply = loader.getController();
+                reply.setPost(t1);
+                reply.setUser(getUserName());
+                ((Node)(event.getSource())).getScene().getWindow().hide();
+                loader = new FXMLLoader(getClass().getResource("/View/DisplayOwnerJob.fxml"));
+                Parent parent = loader.load();
+
+                Scene scene = new Scene(parent);
+                Stage stage = (Stage)((Node)(event).getSource()).getScene().getWindow();
+                stage.setScene(scene);
+                stage.show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
+    private void displayOwnerSale(String t1) {
+        list.setOnMouseClicked((event) -> {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/DisplayOwnerSale.fxml"));
+                loader.load();
+                DisplayOwnerSale reply = loader.getController();
+                reply.setPost(t1);
+                reply.setUser(getUserName());
+                ((Node)(event.getSource())).getScene().getWindow().hide();
+                loader = new FXMLLoader(getClass().getResource("/View/DisplayOwnerSale.fxml"));
+                Parent parent = loader.load();
+
+                Scene scene = new Scene(parent);
+                Stage stage = (Stage)((Node)(event).getSource()).getScene().getWindow();
+                stage.setScene(scene);
+                stage.show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
+    private void displayOwnerEvent(String t1) {
+        list.setOnMouseClicked((event) -> {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/DisplayOwnerEvent.fxml"));
+                loader.load();
+                DisplayOwnerEvent reply = loader.getController();
+                reply.setPost(t1);
+                reply.setUser(getUserName());
+                ((Node)(event.getSource())).getScene().getWindow().hide();
+                loader = new FXMLLoader(getClass().getResource("/View/DisplayOwnerEvent.fxml"));
+                Parent parent = loader.load();
+
+                Scene scene = new Scene(parent);
+                Stage stage = (Stage)((Node)(event).getSource()).getScene().getWindow();
+                stage.setScene(scene);
+                stage.show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
     }
 
 
     //to display ReplyJobPost.fxml window so that one can reply to job posts
     private void displayJobReply(String temp) {
-        list.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                FXMLLoader loader = new FXMLLoader();
-                try {
-                    loader.setLocation(getClass().getResource("/View/ReplyJobPost.fxml"));
-                    Scene scene = new Scene(loader.load());
-                    Stage stage = new Stage();
-                    stage.setScene(scene);
-                    stage.initModality(Modality.APPLICATION_MODAL);
-                    stage.show();
-                } catch (IOException e) {
-                    System.out.println("Could not open ReplyJobPost.fxml");
-                    e.printStackTrace();
-                }
+        list.setOnMouseClicked((event) -> {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/ReplyJobPost.fxml"));
+                loader.load();
+                DisplayOwnerJob reply = loader.getController();
+                reply.setPost(temp);
+                reply.setUser(getUserName());
+                ((Node)(event.getSource())).getScene().getWindow().hide();
+                loader = new FXMLLoader(getClass().getResource("/view/ReplyJobPost.fxml"));
+                Parent parent = loader.load();
+
+                Scene scene = new Scene(parent);
+                Stage stage = (Stage)((Node)(event).getSource()).getScene().getWindow();
+                stage.setScene(scene);
+                stage.show();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         });
     }
@@ -383,21 +463,23 @@ public class MainWindow implements Initializable {
 
     //to display ReplySalePost.fxml window so that one can reply to sale posts
     private void displaySaleReply(String temp) {
-        list.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                FXMLLoader loader = new FXMLLoader();
-                try {
-                    loader.setLocation(getClass().getResource("/View/ReplySalePost.fxml"));
-                    Scene scene = new Scene(loader.load());
-                    Stage stage = new Stage();
-                    stage.setScene(scene);
-                    stage.initModality(Modality.APPLICATION_MODAL);
-                    stage.show();
-                } catch (IOException e) {
-                    System.out.println("Could not open ReplySalePost.fxml");
-                    e.printStackTrace();
-                }
+        list.setOnMouseClicked((event) -> {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/ReplySalePost.fxml"));
+                loader.load();
+                DisplayOwnerSale reply = loader.getController();
+                reply.setPost(temp);
+                reply.setUser(getUserName());
+                ((Node)(event.getSource())).getScene().getWindow().hide();
+                loader = new FXMLLoader(getClass().getResource("/view/ReplySalePost.fxml"));
+                Parent parent = loader.load();
+
+                Scene scene = new Scene(parent);
+                Stage stage = (Stage)((Node)(event).getSource()).getScene().getWindow();
+                stage.setScene(scene);
+                stage.show();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         });
     }
@@ -411,6 +493,7 @@ public class MainWindow implements Initializable {
                 loader.load();
                 ReplyEventPost reply = loader.getController();
                 reply.setPost(temp);
+                reply.setUser(getUserName());
                 ((Node)(event.getSource())).getScene().getWindow().hide();
                 loader = new FXMLLoader(getClass().getResource("/view/ReplyEventPost.fxml"));
                 Parent parent = loader.load();
@@ -494,9 +577,4 @@ public class MainWindow implements Initializable {
         printWriter.close();
     }
 
-    @FXML private void clear(ActionEvent actionEvent) {
-        moreDetails.setOnMouseClicked((event) ->{
-            list.getSelectionModel().clearSelection();
-                });
-    }
 }

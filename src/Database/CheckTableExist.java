@@ -1,4 +1,4 @@
-package hsql_db;
+package Database;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;

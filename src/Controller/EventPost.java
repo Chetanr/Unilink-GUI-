@@ -90,7 +90,6 @@ public class EventPost extends Post{
             if (checkCapacity())
             {
                 GenerateId id = new GenerateId();
-                Login login = new Login();
                 Event ev = new Event (id.getId(), title.getText(), description.getText(), venue.getText(), date.getValue().toString(), Integer.parseInt(capacity.getText()), "OPEN", getUserId(), fileName );
                 ev.insertDB();
                 saveImage();
