@@ -13,7 +13,7 @@ public class DeleteTable {
 		try (Connection con = ConnectionTest.getConnection(DB_NAME);
 				Statement stmt = con.createStatement();
 		) {
-			int result = stmt.executeUpdate("DROP TABLE reply");
+			int result = stmt.executeUpdate("DROP TABLE " + TABLE_NAME);
 			
 			if(result == 0) {
 				System.out.println("Table " + TABLE_NAME + " has been deleted successfully");

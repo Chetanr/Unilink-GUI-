@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
-
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.DisplayOwnerEvent">
    <children>
@@ -32,5 +32,10 @@
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
+      <Label fx:id="attendeeList" layoutX="287.0" layoutY="241.0" text="Attendee List:">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font></Label>
+      <Button fx:id="back" layoutX="23.0" layoutY="214.0" mnemonicParsing="false" onAction="#back" text="Back to Main Window" />
    </children>
 </AnchorPane>

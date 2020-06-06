@@ -54,7 +54,19 @@ public class SalePost extends Post{
     @Override
     @FXML protected void back(ActionEvent actionEvent) {
         back.setOnMouseClicked((event) -> {
-            ((Node)(event.getSource())).getScene().getWindow().hide();
+            FXMLLoader loader = new FXMLLoader();
+            try {
+                loader.setLocation(getClass().getResource("/View/MainWindow.fxml"));
+                Scene scene = new Scene(loader.load());
+                Stage stage = new Stage();
+                stage.setTitle("Create Event Post");
+                stage.setScene(scene);
+                stage.initModality(Modality.APPLICATION_MODAL);
+                stage.showAndWait();
+            } catch (IOException e) {
+                System.out.println("Could not open MainWindow.fxml");
+                e.printStackTrace();
+            }
         });
     }
 
@@ -82,16 +94,6 @@ public class SalePost extends Post{
 
             }
         });
-    }
-
-
-    //method for close post button
-    @Override
-    @FXML protected void closePost(ActionEvent actionEvent) {
-    }
-
-    @Override
-    @FXML protected void deletePost(ActionEvent actionEvent) {
     }
 
 

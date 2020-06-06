@@ -1,6 +1,0 @@
-EVE1,sdasd,asdasd,OPEN,asdasd,2020-05-26,IMG_0726.jpg
-EVE2,vdfd,fawas,OPEN,asdxcv,2020-05-25,IMG_0740.jpg
-JOB1,asdas,dasdas,OPEN,34.0,IMG_0737.jpg
-JOB2,vdsvsd,asdasd,OPEN,10.0,IMG_0741.jpg
-JOB3,asdasd,asdasd,OPEN,10.0,IMG_0744.jpg
-SAL1,asda,sdasasd,OPEN,45.0,IMG_0731.jpg

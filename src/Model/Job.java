@@ -69,9 +69,9 @@ public class Job extends Post{
         try (Connection con = ConnectionTest.getConnection(DB_NAME);
              Statement stmt = con.createStatement();
         ) {
-            generateId();
             String query = "INSERT INTO " + REPLY_TABLE +
-                    " (creator_id, post_id, job_offer) VALUES ( " + "'" + getCreatorId() + "'" + " ," + "'" + getPostId() + "'" + " ," +"'" + getLowestOffer() + "'" + " )";
+                    " (creator_id, post_id, job_offer, attendee_id) VALUES ( " + "'" + getCreatorId() + "'" + " ," + "'" + getPostId() + "'" + " ," + "'" + getLowestOffer() + "'" + " ," +
+                    "'" + user + "'" + " )";
 
             int result = stmt.executeUpdate(query);
 

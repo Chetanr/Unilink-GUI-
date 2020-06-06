@@ -22,15 +22,18 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.fxml.FXML;
 import javafx.event.*;
+import javafx.scene.image.Image;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.Scanner;
+
 import Model.GetPost;
 
 import javafx.scene.image.ImageView;
@@ -45,7 +48,6 @@ public class MainWindow implements Initializable {
     @FXML private Label welcomeLabel;
     @FXML private ListView<String> list = null;
     @FXML private Button logout;
-    @FXML private MenuItem export;
 
     private static String userName;
 
@@ -443,7 +445,7 @@ public class MainWindow implements Initializable {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/ReplyJobPost.fxml"));
                 loader.load();
-                DisplayOwnerJob reply = loader.getController();
+                ReplyJobPost reply = loader.getController();
                 reply.setPost(temp);
                 reply.setUser(getUserName());
                 ((Node)(event.getSource())).getScene().getWindow().hide();
@@ -467,7 +469,7 @@ public class MainWindow implements Initializable {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/ReplySalePost.fxml"));
                 loader.load();
-                DisplayOwnerSale reply = loader.getController();
+                ReplySalePost reply = loader.getController();
                 reply.setPost(temp);
                 reply.setUser(getUserName());
                 ((Node)(event.getSource())).getScene().getWindow().hide();
@@ -518,8 +520,6 @@ public class MainWindow implements Initializable {
         return this.userName;
     }
 
-    @FXML private void importFromFile(ActionEvent actionEvent) {
-    }
 
 
     //method to export the post details to file
@@ -540,9 +540,11 @@ public class MainWindow implements Initializable {
             String status = i.getStatus();
             String venue = i.getVenue();
             String date = i.getDate();
+            String creatorId = i.getCreatorId();
+            int attendeeCount = i.getAttendeeCount();
             String imageName = i.getFileName();
             printWriter.println(id + "," + title + "," + description + "," + status + ","
-                    + venue + "," + date + "," + imageName);
+                    + venue + "," + date + "," + creatorId + "," + attendeeCount + "," + imageName);
         }
 
         for ( Job i : jobPosts)
@@ -552,9 +554,10 @@ public class MainWindow implements Initializable {
             String description = i.getDescription();
             String status = i.getStatus();
             Double proposedPrice = i.getProposedPrice();
+            String creatorId = i.getCreatorId();
             String imageName = i.getFileName();
-            printWriter.println(id + "," + title + "," + description + "," + status + ","
-                    + proposedPrice + "," + imageName);
+            printWriter.println(id + "," + title + "," + description + "," + proposedPrice
+                    + "," + status + "," + creatorId + "," + imageName);
         }
 
         for ( Sale i : salePosts)
@@ -564,9 +567,11 @@ public class MainWindow implements Initializable {
             String description = i.getDescription();
             String status = i.getStatus();
             Double askingPrice = i.getAskingPrice();
+            Double minimumRaise = i.getMinimumRaise();
+            String creatorId = i.getCreatorId();
             String imageName = i.getFileName();
-            printWriter.println(id + "," + title + "," + description + "," + status + ","
-                    + askingPrice + "," + imageName);
+            printWriter.println(id + "," + title + "," + description + "," + askingPrice + ","
+                    + minimumRaise + "," + status + "," + creatorId + "," + imageName);
         }
 
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -577,4 +582,56 @@ public class MainWindow implements Initializable {
         printWriter.close();
     }
 
+
+    //method to import the data from an external text file
+    public void importFile(ActionEvent actionEvent) {
+        FileChooser fileChooser = new FileChooser();
+        FileChooser.ExtensionFilter imageFilter = new FileChooser.ExtensionFilter("Text Files", "*.txt");
+        fileChooser.getExtensionFilters().add(imageFilter);
+        File file = fileChooser.showOpenDialog(null);
+        String fileName = file.getAbsoluteFile().getName();
+        if (file != null)
+        {
+            try {
+                insertIntoDb(fileName);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+    //method to insert data into database after reading the data
+    private void insertIntoDb(String fileName) throws IOException {
+        Scanner sc = new Scanner(new File(fileName));
+        while(sc.hasNextLine())
+        {
+            String [] words = new String[0];
+            Scanner s = new Scanner(new File(fileName));
+
+                words = sc.nextLine().split(",");
+
+                if (words[0].contains("EVE"))
+                {
+                    Event event = new Event(words[0], words[1], words[2],words[3], words[4]
+                    , Integer.parseInt(words[5]), words[6], words[7], words[8]);
+                    event.insertDB();
+                }
+                else if(words[0].contains("SAL"))
+                {
+                    Sale sale = new Sale(words[0], words[1], words[2],Double.parseDouble(words[3]),
+                            Double.parseDouble(words[4]), words[5], words[6], words[7]);
+                    sale.insertDB();
+                }
+                else if(words[0].contains("JOB"))
+                {
+                    Job job = new Job(words[0], words[1], words[2],Double.parseDouble(words[3]),
+                            words[4], words[5], words[6]);
+                    job.insertDB();
+                }
+                s.close();
+        }
+        sc.close();
+
+    }
 }

@@ -143,13 +143,13 @@ public class ReplyJobPost implements Initializable {
             {
                 if (i.getStatus().equalsIgnoreCase("Open"))
                 {
-                    if(temp < i.getLowestOffer())
+                    if(temp < i.getProposedPrice())
                     {
                         i.setLowestOffer(temp);
                         i.insertReplies(getUser());
                         display();
                     }
-                    else if (temp > i.getLowestOffer())
+                    else if (temp > i.getProposedPrice())
                     {
                         throw new offerNotAcceptedException();
                     }

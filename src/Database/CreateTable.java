@@ -80,6 +80,7 @@ public class CreateTable {
 					+ "venue VARCHAR(10) NOT NULL,"
 					+ "date DATE NOT NULL,"
 					+ "capacity int NOT NULL,"
+					+ "attendee_count int NOT NULL,"
 					+ "image_name VARCHAR(100),"
 					+ "PRIMARY KEY (post_id))");
 			if(result == 0) {
@@ -103,8 +104,7 @@ public class CreateTable {
 					+ "job_offer DECIMAL(6,2),"
 					+ "sale_offer DECIMAL(6,2),"
 					+ "attendee_id VARCHAR(10),"
-					+ "attendee_count int,"
-					+ "PRIMARY KEY (post_id))");
+					+ "attendee_count int)");
 			if(result == 0) {
 				System.out.println("Table " + REPLY_TABLE + " has been created successfully");
 			} else {

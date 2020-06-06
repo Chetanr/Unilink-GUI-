@@ -7,10 +7,6 @@ abstract public class Post {
 
     @FXML protected abstract void upload(ActionEvent actionEvent);
 
-    @FXML protected abstract void closePost(ActionEvent actionEvent);
-
-    @FXML protected abstract void deletePost(ActionEvent actionEvent);
-
     @FXML protected abstract void savePost(ActionEvent actionEvent);
 
     protected abstract void saveImage();

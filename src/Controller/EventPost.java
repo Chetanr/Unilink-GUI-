@@ -65,10 +65,6 @@ public class EventPost extends Post{
                     e.printStackTrace();
                 }
             }
-//            else
-//            {
-//
-//            }
         });
     }
 
@@ -120,6 +116,7 @@ public class EventPost extends Post{
             }
         });
     }
+
 
 
     //method for save image button

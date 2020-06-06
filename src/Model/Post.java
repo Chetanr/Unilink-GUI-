@@ -9,6 +9,7 @@ public abstract class Post {
     private String replies;
     private String fileName;
 
+
     //constructor to create a new post
     public Post (String postId, String title, String description, String status, String creatorId, String fileName)
     {
@@ -19,6 +20,8 @@ public abstract class Post {
         this.creatorId = creatorId;
         this.fileName = fileName;
     }
+
+
 
     public Post(String post_id, String title, String description, String status, String image_name) {
         this.postId = post_id;

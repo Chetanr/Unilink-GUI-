@@ -34,12 +34,12 @@ public class GetPost {
         ) {
             String query = null;
 
-            query = "SELECT creator_id, post_id, title, description, status, venue, date, image_name FROM " + TABLE_NAME;
+            query = "SELECT creator_id, post_id, title, description, status, venue, date, attendee_count, image_name FROM " + TABLE_NAME;
 
             try (ResultSet resultSet = stmt.executeQuery(query)) {
                 while(resultSet.next()) {
                     Event event =  new Event(resultSet.getString("creator_id"), resultSet.getString("post_id"), resultSet.getString("title"), resultSet.getString("description"), resultSet.getString("status"),
-                            resultSet.getString("venue"), resultSet.getString("date"),resultSet.getString("image_name"));
+                            resultSet.getString("venue"), resultSet.getString("date"),resultSet.getInt("attendee_count"), resultSet.getString("image_name"));
                     eventPost.add(event);
                 }
             } catch (SQLException e) {
@@ -72,7 +72,7 @@ public class GetPost {
             try (ResultSet resultSet = stmt.executeQuery(query)) {
                 while(resultSet.next()) {
                     Reply reply1= new Reply(resultSet.getString("creator_id"), resultSet.getString("post_id"), resultSet.getDouble("job_offer"), resultSet.getDouble("sale_offer"),
-                            resultSet.getInt("attendee_id"), resultSet.getInt("attendee_count"));
+                            resultSet.getString("attendee_id"), resultSet.getInt("attendee_count"));
                     reply.add(reply1);
                 }
             } catch (SQLException e) {

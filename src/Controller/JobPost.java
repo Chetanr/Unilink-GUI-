@@ -86,18 +86,6 @@ public class JobPost extends Post{
     }
 
 
-    //method for close post button
-    @Override
-    @FXML protected void closePost(ActionEvent actionEvent) {
-    }
-
-
-    //method for delete post button
-    @Override
-    @FXML protected void deletePost(ActionEvent actionEvent) {
-    }
-
-
     //method for save post button
     @Override
     @FXML protected void savePost(ActionEvent actionEvent) {

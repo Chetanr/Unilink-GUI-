@@ -66,15 +66,16 @@ public class Sale extends Post {
         try (Connection con = ConnectionTest.getConnection(DB_NAME);
              Statement stmt = con.createStatement();
         ) {
-            generateId();
+//            generateId();
             String query = "INSERT INTO " + REPLY_TABLE +
-                    " (creator_id, post_id, sale_offer) VALUES ( " + "'" + getCreatorId() + "'" + " ," + "'" + getPostId() + "'" + " ," +"'" + getHighestOffer() + "'" + " )";
+                    " (creator_id, post_id, sale_offer, attendee_id) VALUES ( " + "'" + getCreatorId() + "'" + " ," + "'" + getPostId() + "'" + " ," + "'" + getHighestOffer() + "'" +
+                    " ," + "'" + user + "'" + " )";
 
             int result = stmt.executeUpdate(query);
 
             con.commit();
 
-            System.out.println("Insert into table " + TABLE_NAME + " executed successfully");
+            System.out.println("Insert into table " + REPLY_TABLE + " executed successfully");
             System.out.println(result + " row(s) affected");
 
         } catch (Exception e) {

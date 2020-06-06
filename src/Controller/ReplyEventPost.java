@@ -72,36 +72,35 @@ public class ReplyEventPost implements Initializable {
                 temp1 = temp1 + temp.charAt(i);
                 i++;
             }
-                    switch (count) {
-                        case 0 : postId = temp1;
-                                 i++;
-                                 count++;
-                                 break;
-
-                        case 1: title1 = temp1;
-                                i++;
-                                count++;
-                                break;
-                        case 2: description1 = temp1;
-                                i++;
-                                count++;
-                                break;
-                        case 3: status = temp1;
-                                i++;
-                                count++;
-                                break;
-                        case 4: venue1 = temp1;
-                                i++;
-                                count++;
-                                break;
-                        case 5: date1 = temp1;
-                                i++;
-                                count++;
-                                break;
-                        default: i++;
-                                count++;
-                                break;
-                    }
+            switch (count) {
+                case 0:postId = temp1;
+                        i++;
+                        count++;
+                        break;
+                case 1: title1 = temp1;
+                        i++;
+                        count++;
+                        break;
+                case 2: description1 = temp1;
+                        i++;
+                        count++;
+                        break;
+                case 3: status = temp1;
+                        i++;
+                        count++;
+                        break;
+                case 4: venue1 = temp1;
+                        i++;
+                        count++;
+                        break;
+                case 5: date1 = temp1;
+                        i++;
+                        count++;
+                        break;
+                default:i++;
+                        count++;
+                        break;
+            }
         }
     }
 
@@ -152,6 +151,7 @@ public class ReplyEventPost implements Initializable {
                             i.setStatus("CLOSED");
                         }
                         i.insertReplies(getUser());
+                        i.updatePost();
                         display();
                     }
                 }
