@@ -69,16 +69,6 @@ public class EventPost extends Post{
     }
 
 
-    //method for close post button
-    @Override
-    @FXML public void closePost(ActionEvent actionEvent) {
-    }
-
-    //method for delete post button
-    @Override
-    @FXML public void deletePost(ActionEvent actionEvent) {
-    }
-
     //method for sale post button
     @Override
     @FXML public void savePost(ActionEvent actionEvent) {

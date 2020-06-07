@@ -44,8 +44,6 @@
       </Label>
       <TextArea fx:id="proposedPrice" layoutX="327.0" layoutY="208.0" prefHeight="27.0" prefWidth="219.0" />
       <Button fx:id="upload" layoutX="61.0" layoutY="260.0" mnemonicParsing="false" onAction="#upload" text="Upload Image" />
-      <Button fx:id="closePost" layoutX="243.0" layoutY="300.0" mnemonicParsing="false" onAction="#closePost" text="Close Post" />
-      <Button fx:id="deletePost" layoutX="374.0" layoutY="300.0" mnemonicParsing="false" onAction="#deletePost" text="Delete Post" />
       <Button fx:id="savePost" layoutX="507.0" layoutY="300.0" mnemonicParsing="false" onAction="#savePost" text="Save Post" />
       <Label fx:id="proposedPriceError" layoutX="550.0" layoutY="221.0" textFill="#e80808" />
    </children>

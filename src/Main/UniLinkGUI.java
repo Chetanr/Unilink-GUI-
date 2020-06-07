@@ -1,5 +1,6 @@
 package Main;
 
+import Model.CreateTable;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.scene.*;
@@ -23,7 +24,6 @@ public class UniLinkGUI extends Application {
             stage.setTitle("Unilink");
             stage.setScene(scene);
             stage.show();
-
         } catch (IOException e) {
             System.out.println("Unable to load the fxml file.!");
         }

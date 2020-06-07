@@ -1,4 +1,6 @@
 package Database;
+import Model.ConnectionTest;
+
 import java.sql.Connection;
 import java.sql.Statement;
 
@@ -9,7 +11,7 @@ public class DeleteRow {
 		
 		//use try-with-resources Statement
 		try (Connection con = ConnectionTest.getConnection(DB_NAME);
-				Statement stmt = con.createStatement();
+             Statement stmt = con.createStatement();
 		) {
 			String query = "DELETE FROM " + TABLE_NAME + 
 					" WHERE first_name LIKE 'Tom'";

@@ -1,7 +1,5 @@
 package Model;
 
-import Database.ConnectionTest;
-
 import java.sql.Connection;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.sql.Statement;
@@ -69,7 +67,6 @@ public class Event extends Post{
             System.out.println(result + " row(s) affected");
 
         } catch (Exception e) {
-            System.out.println(e.getMessage());
         }
     }
 
@@ -112,7 +109,7 @@ public class Event extends Post{
             System.out.println(result + " row(s) affected");
 
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+
         }
     }
 

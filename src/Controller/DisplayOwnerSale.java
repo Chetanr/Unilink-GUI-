@@ -5,10 +5,7 @@ to the owner of the post
 
 package Controller;
 
-import Model.Event;
-import Model.GetPost;
-import Model.Reply;
-import Model.Sale;
+import Model.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -42,6 +39,7 @@ public class DisplayOwnerSale implements Initializable {
     private String status1;
     private String askingPrice1;
     private String offerList1 = "List of Offers:\n";
+    private String imageName;
 
 
     @Override
@@ -100,7 +98,22 @@ public class DisplayOwnerSale implements Initializable {
                     break;
             }
         }
+        getImageName();
         getOffers();
+    }
+
+
+    private void getImageName() {
+        GetPost getPost = new GetPost();
+        getPost.selectDB();
+        ArrayList<Job> posts;
+        posts = getPost.getJobPost();
+        for (Job i : posts) {
+            if (postId.contains(i.getPostId())) {
+                imageName = i.getFileName();
+                break;
+            }
+        }
     }
 
 

@@ -16,8 +16,11 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -27,6 +30,7 @@ public class DisplayOwnerEvent implements Initializable {
 
     private static String post;
     private static String user;
+    @FXML private ImageView imageView;
 
 
     @FXML private Label attendeeList;
@@ -45,6 +49,7 @@ public class DisplayOwnerEvent implements Initializable {
     private String postId;
     private String attendeeCount1;
     private String attendeeList1 = "\n";
+    private String imageName;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -58,6 +63,9 @@ public class DisplayOwnerEvent implements Initializable {
             date.setText(date1);
             attendeeCount.setText("Attendee Count:" + attendeeCount1);
             attendeeList.setText("List of attendees:" + attendeeList1);
+            File file = new File("/src/Images" + imageName);
+            Image image = new Image(file.toURI().toString());
+            imageView.setImage(image);
         }
 
     }
@@ -119,8 +127,10 @@ public class DisplayOwnerEvent implements Initializable {
             if (postId.contains(i.getPostId()))
             {
                 attendeeCount1 = String.valueOf(i.getAttendeeCount());
+                imageName = i.getFileName();
                 break;
             }
+
         }
         getAttendeeList();
     }

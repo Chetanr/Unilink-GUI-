@@ -1,4 +1,6 @@
 package Database;
+import Model.ConnectionTest;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,7 +13,7 @@ public class SelectQuery {
 		
 		//use try-with-resources Statement
 		try (Connection con = ConnectionTest.getConnection(DB_NAME);
-				Statement stmt = con.createStatement();
+             Statement stmt = con.createStatement();
 		) {
 			String query = "SELECT post_id, title, description, status, venue, date, creator_id, image_name FROM " + TABLE_NAME;
 

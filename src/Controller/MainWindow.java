@@ -50,42 +50,58 @@ public class MainWindow implements Initializable {
     @FXML private Button logout;
 
     private static String userName;
+    private String postCreatorFilter = "all";
+    private String postStausFilter = "all";
+    private String postTypeFilter = "all";
 
 
     ObservableList<String> postList = FXCollections.observableArrayList();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
         GetPost getPost = new GetPost();
         getPost.selectDB();
 
+        try {
+            displayEventPost(getPost.getEventPost());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        displaySalePost(getPost.getSalePost());
+        displayJobPost(getPost.getJobPost());
+
         initialiseFilters();
 
-        checkPostFilters(getPost);
 
+
+        checkPostFilters(getPost);
         welcomeLabel.setText("Welcome " + getUserName() + ".!");
         reply();
 
     }
 
+
+
     private void checkPostFilters(GetPost getPost) {
         postType.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
-                if (t1.equals("Event")) {
+                if (t1.equalsIgnoreCase("Event")) {
                     list.getItems().clear();
                     try {
+                        postTypeFilter = "Event";
                         displayEventPost(getPost.getEventPost());
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 }
-                else if (t1.equals("Sale"))
+                else if (t1.equalsIgnoreCase("Sale"))
                 {
                     list.getItems().clear();
                     displaySalePost(getPost.getSalePost());
                 }
-                else if (t1.equals("Job"))
+                else if (t1.equalsIgnoreCase("Job"))
                 {
                     list.getItems().clear();
                     displayJobPost(getPost.getJobPost());
@@ -93,13 +109,14 @@ public class MainWindow implements Initializable {
                 else
                 {
                     list.getItems().clear();
-                    displayJobPost(getPost.getJobPost());
                     try {
                         displayEventPost(getPost.getEventPost());
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                     displaySalePost(getPost.getSalePost());
+                    displayJobPost(getPost.getJobPost());
+
                 }
             }
         });
@@ -201,7 +218,7 @@ public class MainWindow implements Initializable {
             String date = i.getDate();
             String creatorId = i.getCreatorId();
             String imageName = i.getFileName();
-            populateEventListView(id, title, description, status,venue,date, creatorId, imageName);
+            populateEventListView(id, title, description, status, venue, date, creatorId, imageName);
         }
     }
 

@@ -5,8 +5,6 @@ ReplyPost Table.
  */
 package Model;
 
-import Database.ConnectionTest;
-
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;

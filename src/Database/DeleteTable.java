@@ -1,4 +1,6 @@
 package Database;
+import Model.ConnectionTest;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -11,7 +13,7 @@ public class DeleteTable {
 		
 		//use try-with-resources Statement
 		try (Connection con = ConnectionTest.getConnection(DB_NAME);
-				Statement stmt = con.createStatement();
+             Statement stmt = con.createStatement();
 		) {
 			int result = stmt.executeUpdate("DROP TABLE " + TABLE_NAME);
 			

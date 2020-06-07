@@ -52,8 +52,6 @@
          </font>
       </Label>
       <Button fx:id="upload" layoutX="61.0" layoutY="260.0" mnemonicParsing="false" onAction="#upload" text="Upload Image" />
-      <Button fx:id="closePost" layoutX="263.0" layoutY="411.0" mnemonicParsing="false" onAction="#closePost" text="Close Post" />
-      <Button fx:id="deletePost" layoutX="378.0" layoutY="411.0" mnemonicParsing="false" onAction="#deletePost" text="Delete Post" />
       <Button fx:id="savePost" layoutX="497.0" layoutY="411.0" mnemonicParsing="false" onAction="#savePost" text="Save Post" />
       <DatePicker fx:id="date" layoutX="330.0" layoutY="282.0" />
       <TextField fx:id="title" layoutX="330.0" layoutY="72.0" prefHeight="27.0" prefWidth="211.0" />
