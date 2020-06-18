@@ -54,7 +54,19 @@ public class JobPost extends Post{
     @Override
     @FXML protected void back(ActionEvent actionEvent) {
         back.setOnMouseClicked((event) -> {
-            ((Node)(event.getSource())).getScene().getWindow().hide();
+            FXMLLoader loader = new FXMLLoader();
+            try {
+                loader.setLocation(getClass().getResource("/View/MainWindow.fxml"));
+                Scene scene = new Scene(loader.load());
+                Stage stage = new Stage();
+                stage.setTitle("Create Event Post");
+                stage.setScene(scene);
+                stage.initModality(Modality.APPLICATION_MODAL);
+                stage.showAndWait();
+            } catch (IOException e) {
+                System.out.println("Could not open SalePost.fxml");
+                e.printStackTrace();
+            }
         });
     }
 
